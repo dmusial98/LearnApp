@@ -12,8 +12,9 @@ class LearnApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: IntroScreen()
+    return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.blueGrey),
+      home: const IntroScreen()
     );
   }
 }
