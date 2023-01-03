@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/screens/intro_screen.dart';
+import 'package:my_app/screens/add_screen.dart';
+import 'package:my_app/screens/explore_screen.dart';
+import 'package:my_app/screens/search_screen.dart';
+import 'package:my_app/screens/own_screen.dart';
+
+import 'screens/favourite_screen.dart';
 
 void main()
 {
@@ -14,7 +19,13 @@ class LearnApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blueGrey),
-      home: const IntroScreen()
+      routes: {
+        '/': (context) => const OwnScreen(),
+        '/search': (context) => const SearchScreen(),
+        '/explore': (context) => const ExploreScreen(),
+        '/add': (context) => const AddScreen(),
+        '/favourites': (context) => const FavouriteScreen(),
+      }
     );
   }
 }
