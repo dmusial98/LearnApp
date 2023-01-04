@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/edit_profile_screen.dart';
 import '../screens/search_screen.dart';
 import '../screens/own_screen.dart';
 
@@ -19,10 +20,10 @@ class MenuDrawer extends StatelessWidget {
   List<Widget> buildMenuItems(BuildContext context)
   {
     final List<String> menuTitles = [
-      'Home',
-      'BMI Calculator',
-      'Weather',
-      'Training'
+      'Main',
+      'Edit account',
+      'About us',
+      'Log out'
     ];
 
     List<Widget> menuItems = [];
@@ -39,10 +40,16 @@ class MenuDrawer extends StatelessWidget {
         title: Text(element, style: const TextStyle(fontSize: 18)), 
         onTap: () {
           switch(element) {
-            case 'Home':
+            case 'Main':
               screen = const OwnScreen();
               break;
-            case 'BMI Calculator':
+            case 'Edit account':
+              screen = const EditProfileScreen();
+              break;
+            case 'About us':
+              screen = const SearchScreen();
+              break;
+            case 'Log out':
               screen = const SearchScreen();
               break;
           }

@@ -10,11 +10,11 @@ class OwnScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Learn App')),
+        appBar: AppBar(title: const Text('Own')),
         drawer: const MenuDrawer(),
         bottomNavigationBar: MenuBottom(),
         body: Container(
-          decoration: const BoxDecoration( 
+          decoration: const BoxDecoration(
             image: DecorationImage( 
               image: AssetImage('assets/sea.jpg'),
               fit: BoxFit.cover,
