@@ -11,7 +11,7 @@ class MenuBottom extends StatelessWidget {
       onTap: (int index) {
         switch (index) {
           case 0:
-            Navigator.pushNamed(context, '/');
+            Navigator.pushNamed(context, '/own');
             break;
           case 1:
             Navigator.pushNamed(context, '/search');

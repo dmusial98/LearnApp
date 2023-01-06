@@ -13,7 +13,7 @@ class EditProfileScreen extends StatelessWidget {
         drawer: const MenuDrawer(),
         body: Container(
           decoration: const BoxDecoration(
-            image: DecorationImage( 
+            image: DecorationImage(
               image: AssetImage('assets/sea.jpg'),
               fit: BoxFit.cover,
             )
