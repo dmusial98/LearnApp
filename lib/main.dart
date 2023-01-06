@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/screens/add_screen.dart';
 import 'package:my_app/screens/edit_profile_screen.dart';
 import 'package:my_app/screens/explore_screen.dart';
+import 'package:my_app/screens/register_screen.dart';
 import 'package:my_app/screens/search_screen.dart';
 import 'package:my_app/screens/own_screen.dart';
 
@@ -21,7 +22,8 @@ class LearnApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blueGrey),
       routes: {
-        '/': (context) => const OwnScreen(),
+        '/': (context) => const RegisterScreen(),
+        '/own': (context) => const OwnScreen(),
         '/search': (context) => const SearchScreen(),
         '/explore': (context) => const ExploreScreen(),
         '/add': (context) => const AddScreen(),
