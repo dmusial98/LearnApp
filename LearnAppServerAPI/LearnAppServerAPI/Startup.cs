@@ -64,6 +64,8 @@ namespace LearnAppServerAPI
 
             //services.AddTransient<ITokenService, TokenService>();
             services.AddControllers();
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +74,8 @@ namespace LearnAppServerAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseRouting();
