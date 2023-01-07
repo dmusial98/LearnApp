@@ -395,4 +395,4 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-LearnAppServerAPI/LearnAppServerAPI/appsettings.json
+/LearnAppServerAPI/LearnAppServerAPI/appsettings.json
