@@ -68,7 +68,5 @@ namespace CoreLearnApp.Data
             var query = _context.Users.Where(u => u.Email == email);
             return await query.FirstAsync();
         }
-
-        
     }
 }
