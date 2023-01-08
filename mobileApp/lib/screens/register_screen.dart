@@ -20,6 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final TextEditingController txtEmail = TextEditingController();
   final TextEditingController txtPassword = TextEditingController();
+  final TextEditingController txtConfirmPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   decoration: InputDecoration(hintText: 'Your password')),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: TextField(
+                  controller: txtConfirmPassword,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  decoration:
+                      InputDecoration(hintText: 'Confirm your password')),
             ),
             Padding(
               padding: const EdgeInsets.all(32.0),
