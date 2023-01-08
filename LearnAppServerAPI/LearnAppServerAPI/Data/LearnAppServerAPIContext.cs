@@ -25,7 +25,6 @@ namespace LearnAppServerAPI.Data
             optionsBuilder.UseSqlServer(_config.GetConnectionString("LearnApp"));
         }
 
-
         //dopisac pojedyncze encje
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,13 +50,8 @@ namespace LearnAppServerAPI.Data
                     FacebookLink = "http:facebook.com/user/312",
                     TwitterLink = "http:twitter.com/user/312",
                     AboutMe = "I'm normal user"
-
-                });
-
-           
-           
+                }
+            );
         }
-        
-
     }
 }
