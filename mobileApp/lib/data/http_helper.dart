@@ -1,14 +1,19 @@
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import 'package:my_app/data/user.dart';
 
 class HttpHelper {
-  final String authority = ''; // api.openweathermap.org
-  final String path = ''; // data/2.5/weather
+  final String authority = 'localhost:5000'; // api.openweathermap.org
+  final String path = 'api/Users/1/'; // data/2.5/weather
   final String apiKey = ''; // 362713861276
 
-  Future<String> getWeather(String location) async {
-    Map<String, dynamic> parameters = {'q': location, 'appId': apiKey};
-    Uri uri = Uri.https(authority, path, parameters);
+  Future<User> getUser() async {
+    //Map<String, dynamic> parameters = {'appId': apiKey};
+    Uri uri = Uri.http(authority, path);
     http.Response result = await http.get(uri);
-    return result.body;
+    Map<String, dynamic> data = json.decode(result.body);
+    User user = User.fromJson(data);
+    return user;
   }
 }
