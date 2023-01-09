@@ -17,7 +17,5 @@ namespace CoreLearnAppServerAPI.Data
         Task<User> GetUserByIdAsync(int id);
         Task<User> GetUserByEmailAndPasswordAsync(string login, string password);
         Task<User> GetUserByEmailAsync(string login);
-       
-
     }
 }

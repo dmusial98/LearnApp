@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_app/data/http_helper.dart';
+import 'package:my_app/data/validator.dart';
 import 'package:my_app/shared/menu_bottom.dart';
 
 import '../data/user.dart';
@@ -17,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String email = "";
   String password = "";
+  String errorMessage = "";
 
   final TextEditingController txtEmail = TextEditingController();
   final TextEditingController txtPassword = TextEditingController();
@@ -54,17 +56,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: signUp,
                   child: Text('I want to create new account')),
             ),
-            Text("Debug info: E-mail: $email Password: $password")
+            Text("Debug info: E-mail: $email Password SHA256: $password"),
+            Text(errorMessage, style: TextStyle(color: Colors.red))
           ]),
         ));
   }
 
   Future signIn() async {
     //password = txtPassword.text;
-    HttpHelper httpHelper = HttpHelper();
+    /* HttpHelper httpHelper = HttpHelper();
     User tmpUser = await httpHelper.getUser();
     email = tmpUser.Email;
-    password = tmpUser.Password;
+    password = tmpUser.Password; */
+
+    errorMessage = '';
+
+    if (Validator.validateEmail(txtEmail.text)) {
+      email = txtEmail.text;
+    } else {
+      errorMessage += ' Wrong e-mail address format!';
+    }
+
+    if (Validator.validatePassword(txtPassword.text)) {
+      password = Validator.hashPassword(txtPassword.text);
+    } else {
+      errorMessage += ' Wrong password format!';
+    }
 
     setState(() {
       //email = txtEmail.text;

@@ -8,12 +8,8 @@ namespace LearnAppServerAPI.Data
     {
         public LearnAppServerAPIProfile()
         {
-        
-
             this.CreateMap<User, UserModel>()
                 .ReverseMap();
-
-           
         }
     }
 }
