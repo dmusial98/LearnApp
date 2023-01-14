@@ -57,6 +57,22 @@ namespace LearnAppServerAPI.Controllers
             }
         }
 
+        [HttpGet]
+        //[Route("byPassword")]
+        public async Task<ActionResult<UserModel>> Get(string email, string password)
+        {
+            try
+            {
+                var result = await _repository.GetUserByEmailAndPasswordAsync(email, password);
+                return _mapper.Map<UserModel>(result);
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+            
+        }
+
         [HttpPost]
         public async Task<ActionResult<UserModel>> Post(UserModel model)
         {
