@@ -58,7 +58,7 @@ namespace LearnAppServerAPI.Controllers
         }
 
         [HttpGet]
-        //[Route("byPassword")]
+        [Route("byPassword")]
         public async Task<ActionResult<UserModel>> Get(string email, string password)
         {
             try
