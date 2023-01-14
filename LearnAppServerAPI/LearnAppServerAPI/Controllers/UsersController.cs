@@ -61,6 +61,10 @@ namespace LearnAppServerAPI.Controllers
         [Route("byPassword")]
         public async Task<ActionResult<UserModel>> Get(string email, string password)
         {
+            Console.WriteLine($"User byPassword {email} {password}");
+
+            email = email.Replace("%40", "@");
+
             try
             {
                 var result = await _repository.GetUserByEmailAndPasswordAsync(email, password);
