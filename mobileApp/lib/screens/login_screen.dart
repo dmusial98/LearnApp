@@ -83,6 +83,16 @@ class _LoginScreenState extends State<LoginScreen> {
       errorMessage += ' Wrong password format!';
     }
 
+    if (errorMessage.isEmpty) {
+      HttpHelper httpHelper = HttpHelper();
+      try {
+        User tmpUser = await httpHelper.getUser(email, password);
+        errorMessage = 'User exists: ${tmpUser.AboutMe}';
+        //Navigator.pushNamed(context, '/own');
+      } catch (e) {
+        errorMessage = 'USER NOT FOUND: $e';
+      }
+    }
     setState(() {
       //email = txtEmail.text;
     });
