@@ -67,7 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future register() async {
     //password = txtPassword.text;
     HttpHelper httpHelper = HttpHelper();
-    User tmpUser = await httpHelper.getUser();
+    User tmpUser = await httpHelper.getUser('test', 'test');
     email = tmpUser.Email;
     password = tmpUser.Password;
 
