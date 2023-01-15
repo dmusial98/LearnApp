@@ -5,13 +5,13 @@ import 'package:my_app/data/user.dart';
 
 class HttpHelper {
   final String authority = 'localhost:5000'; // api.openweathermap.org
-  final String path = 'api/Users/byPassword'; // api/Users/1/
+  //final String path = ; // api/Users/1/
   final String apiKey = ''; // 362713861276
 
   Future<User> getUser(String email, String password) async {
     Map<String, dynamic> parameters = {'email': email, 'password': password};
 
-    Uri uri = Uri.http(authority, path, parameters);
+    Uri uri = Uri.http(authority, 'api/Users/byPassword', parameters);
     http.Response result = await http.get(uri);
 
     if (result.statusCode != 200) throw Exception('User error');
@@ -19,5 +19,23 @@ class HttpHelper {
     Map<String, dynamic> data = json.decode(result.body);
     User user = User.fromJson(data);
     return user;
+  }
+
+  Future<void> createNewUser(String email, String password) async {
+    User newUser = User(0, false, email, password, '', '', '', 'New user!');
+    String jsonNewUser = jsonEncode(newUser);
+
+    Uri uri = Uri.http(authority, 'api/Users/');
+
+    http.Response result = await http.post(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'title': jsonNewUser,
+      }),
+    );
+    if (result.statusCode != 200) throw Exception();
   }
 }
