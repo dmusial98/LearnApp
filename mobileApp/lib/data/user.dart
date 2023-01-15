@@ -23,4 +23,14 @@ class User {
     TwitterLink = userMap['twitterLink'] ?? '';
     AboutMe = userMap['aboutMe'] ?? '';
   }
+
+  Map<String, dynamic> toJson() => {
+        'isAdmin': IsAdmin,
+        'email': Email,
+        'password': Password,
+        'phoneNumber': PhoneNumber,
+        'facebookLink': FacebookLink,
+        'twitterLink': TwitterLink,
+        'aboutMe': AboutMe
+      };
 }

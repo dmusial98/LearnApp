@@ -5,6 +5,7 @@ import 'package:my_app/data/http_helper.dart';
 import 'package:my_app/shared/menu_bottom.dart';
 
 import '../data/user.dart';
+import '../data/validator.dart';
 import '../shared/menu_drawer.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   String email = "";
   String password = "";
+  String errorMessage = '';
 
   final TextEditingController txtEmail = TextEditingController();
   final TextEditingController txtPassword = TextEditingController();
@@ -59,20 +61,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child:
                   ElevatedButton(onPressed: register, child: Text('Register')),
             ),
-            Text("Debug info: E-mail: $email Password: $password")
+            Text(errorMessage)
           ]),
         ));
   }
 
   Future register() async {
-    //password = txtPassword.text;
-    HttpHelper httpHelper = HttpHelper();
-    User tmpUser = await httpHelper.getUser('test', 'test');
-    email = tmpUser.Email;
-    password = tmpUser.Password;
+    errorMessage = '';
 
-    setState(() {
-      //email = txtEmail.text;
-    });
+    if (Validator.validateEmail(txtEmail.text)) {
+      email = txtEmail.text;
+    } else {
+      errorMessage += ' Wrong e-mail address format!';
+    }
+
+    if (Validator.validatePassword(txtPassword.text) &&
+        txtPassword.text == txtConfirmPassword.text) {
+      password = Validator.hashPassword(txtPassword.text);
+    } else {
+      errorMessage += ' Wrong password format!';
+    }
+
+    if (errorMessage.isEmpty) {
+      HttpHelper httpHelper = HttpHelper();
+      try {
+        await httpHelper.createNewUser(email, password);
+        //Navigator.pushNamed(context, '/own');
+      } catch (e) {
+        errorMessage = 'USER HAS BEEN NOT CREATED: $e';
+      }
+    }
   }
 }
