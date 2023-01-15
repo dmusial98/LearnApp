@@ -10,8 +10,12 @@ class HttpHelper {
 
   Future<User> getUser(String email, String password) async {
     Map<String, dynamic> parameters = {'email': email, 'password': password};
+
     Uri uri = Uri.http(authority, path, parameters);
     http.Response result = await http.get(uri);
+
+    if (result.statusCode != 200) throw Exception('User error');
+
     Map<String, dynamic> data = json.decode(result.body);
     User user = User.fromJson(data);
     return user;
