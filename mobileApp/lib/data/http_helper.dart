@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:my_app/data/user.dart';
 
 class HttpHelper {
-  final String authority = '10.0.2.2:5000'; // api.openweathermap.org
+  final String authority = 'localhost:5000'; // api.openweathermap.org
   //final String path = ; // api/Users/1/
   final String apiKey = ''; // 362713861276
 

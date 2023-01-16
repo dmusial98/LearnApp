@@ -26,9 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Log')),
-        bottomNavigationBar: MenuBottom(),
-        drawer: MenuDrawer(),
+        appBar: AppBar(
+          title: Text('Log'),
+          automaticallyImplyLeading: false,
+        ),
         body: SingleChildScrollView(
           child: Column(children: [
             Padding(
@@ -89,7 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         User tmpUser = await httpHelper.getUser(email, password);
         errorMessage = 'User exists: ${tmpUser.AboutMe}';
-        //Navigator.pushNamed(context, '/own');
+        Navigator.pop(context);
+        Navigator.pushNamed(context, '/own');
       } catch (e) {
         errorMessage = 'USER NOT FOUND: $e';
       }
