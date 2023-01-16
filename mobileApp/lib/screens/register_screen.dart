@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:my_app/data/http_helper.dart';
 import 'package:my_app/shared/menu_bottom.dart';
 
-import '../data/user.dart';
 import '../data/validator.dart';
 import '../shared/menu_drawer.dart';
 
@@ -28,8 +27,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Registration')),
-        bottomNavigationBar: MenuBottom(),
-        drawer: MenuDrawer(),
         body: SingleChildScrollView(
           child: Column(children: [
             Padding(
@@ -57,10 +54,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       InputDecoration(hintText: 'Confirm your password')),
             ),
             Padding(
-              padding: const EdgeInsets.all(32.0),
-              child:
+                padding: const EdgeInsets.all(32.0),
+                child: Row(children: [
                   ElevatedButton(onPressed: register, child: Text('Register')),
-            ),
+                ])),
             Text(errorMessage)
           ]),
         ));
