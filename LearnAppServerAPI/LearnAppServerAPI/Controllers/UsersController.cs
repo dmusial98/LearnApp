@@ -49,6 +49,7 @@ namespace LearnAppServerAPI.Controllers
             try
             {
                 var result = await _repository.GetUserByIdAsync(id);
+                Console.WriteLine($"{result.Id} {result.IsAdmin} {result.Email} {result.Password} {result.PhoneNumber} {result.FacebookLink} {result.TwitterLink} {result.AboutMe}");
                 return _mapper.Map<UserModel>(result);
             }
             catch (Exception)
@@ -83,6 +84,9 @@ namespace LearnAppServerAPI.Controllers
             try
             {
                 var user = _mapper.Map<User>(model);
+                if (_repository.GetUserByEmailAsync(user.Email) != null)
+                    return this.StatusCode(StatusCodes.Status409Conflict, $"in databse user with the same email {user.Email} exists");
+
                 _repository.Add(user);
                 if (await _repository.SaveChangesAsync())
                 {
