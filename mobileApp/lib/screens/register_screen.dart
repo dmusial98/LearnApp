@@ -90,6 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       } catch (e) {
         errorMessage = 'USER HAS BEEN NOT CREATED: $e';
       }
+      setState(() {});
     }
   }
 }

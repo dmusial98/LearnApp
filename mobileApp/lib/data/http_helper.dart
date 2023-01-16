@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:my_app/data/user.dart';
 
 class HttpHelper {
-  final String authority = 'localhost:5000'; // api.openweathermap.org
+  final String authority = '10.0.2.2:5000'; // api.openweathermap.org
   //final String path = ; // api/Users/1/
   final String apiKey = ''; // 362713861276
 
@@ -32,10 +32,8 @@ class HttpHelper {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
-        'title': jsonNewUser,
-      }),
+      body: jsonNewUser,
     );
-    if (result.statusCode != 200) throw Exception();
+    if (result.statusCode != 201) throw Exception(result.body);
   }
 }
