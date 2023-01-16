@@ -66,7 +66,7 @@ namespace CoreLearnApp.Data
         public async Task<User> GetUserByEmailAsync(string email)
         {
             var query = _context.Users.Where(u => u.Email == email);
-            return await query.FirstAsync();
+            return await query.FirstOrDefaultAsync();
         }
     }
 }

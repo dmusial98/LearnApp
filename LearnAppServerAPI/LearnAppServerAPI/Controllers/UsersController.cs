@@ -84,7 +84,8 @@ namespace LearnAppServerAPI.Controllers
             try
             {
                 var user = _mapper.Map<User>(model);
-                if (_repository.GetUserByEmailAsync(user.Email) != null)
+                var user1 = await _repository.GetUserByEmailAsync(user.Email);
+                if (user1 != null)
                     return this.StatusCode(StatusCodes.Status409Conflict, $"in databse user with the same email {user.Email} exists");
 
                 _repository.Add(user);
