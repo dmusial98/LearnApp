@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:my_app/data/global_data_singleton.dart';
 import 'package:my_app/data/http_helper.dart';
 import 'package:my_app/data/validator.dart';
 import 'package:my_app/shared/menu_bottom.dart';
@@ -90,6 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         User tmpUser = await httpHelper.getUser(email, password);
         errorMessage = 'User exists: ${tmpUser.AboutMe}';
+        GlobalDataSingleton global = GlobalDataSingleton();
+        global.LoggedUserId = tmpUser.Id;
         Navigator.pop(context);
         Navigator.pushNamed(context, '/own');
       } catch (e) {
