@@ -2,6 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_app/data/global_data_singleton.dart';
+import 'package:my_app/data/http_helper.dart';
+import '../data/http_helper.dart';
+import '../data/http_helper.dart';
+import '../data/http_helper.dart';
+import '../data/http_helper.dart';
+import '../data/http_helper.dart';
+import '../data/user.dart';
 import '../shared/menu_drawer.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -30,7 +37,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text('Edit profile')),
-        drawer: const MenuDrawer(),
         body: SingleChildScrollView(
           child: Column(children: [
             Padding(
@@ -40,23 +46,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(hintText: 'Your e-mail address')),
             ),
-            Padding(
+            /*Padding(
               padding: const EdgeInsets.all(24.0),
               child: TextField(
                   controller: txtPassword,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   decoration: InputDecoration(hintText: 'Your password')),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: TextField(
-                  controller: txtConfirmPassword,
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  decoration:
-                      InputDecoration(hintText: 'Confirm your password')),
-            ),
+            ),*/
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: TextField(
@@ -93,6 +90,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             Text("Edited user's ID: ${globalDataSingleton.LoggedUserId}")
           ]),
         ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadUserData();
+    });
+  }
+
+  void loadUserData() async {
+    HttpHelper httpHelper = HttpHelper();
+    try {
+      GlobalDataSingleton global = GlobalDataSingleton();
+      User tmpUser = await httpHelper.getUserById(global.LoggedUserId);
+      txtEmail.text = tmpUser.Email;
+      txtPhoneNumber.text = tmpUser.PhoneNumber;
+      txtFacebookLink.text = tmpUser.FacebookLink;
+      txtTwitterLink.text = tmpUser.TwitterLink;
+      txtAboutMe.text = tmpUser.AboutMe;
+    } catch (e) {
+      errorMessage = 'USER NOT FOUND: $e';
+      Navigator.pop(context);
+    }
   }
 
   void editUser() {}

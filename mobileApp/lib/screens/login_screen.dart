@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: TextField(
-                controller: txtEmail..text = 'admin1@email.com',
+                controller: txtEmail..text = 'user1@email.com',
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(hintText: 'Your e-mail address'),
               ),
@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: TextField(
-                  controller: txtPassword..text = 'strongPassword1',
+                  controller: txtPassword..text = 'strongPassword2',
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   decoration: InputDecoration(hintText: 'Your password')),

@@ -21,6 +21,17 @@ class HttpHelper {
     return user;
   }
 
+  Future<User> getUserById(int Id) async {
+    Uri uri = Uri.http(authority, 'api/Users/${Id}');
+    http.Response result = await http.get(uri);
+
+    if (result.statusCode != 200) throw Exception('User error');
+
+    Map<String, dynamic> data = json.decode(result.body);
+    User user = User.fromJson(data);
+    return user;
+  }
+
   Future<void> createNewUser(String email, String password) async {
     User newUser = User(0, false, email, password, '', '', '', 'New user!');
     String jsonNewUser = jsonEncode(newUser);
