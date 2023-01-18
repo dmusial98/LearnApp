@@ -111,6 +111,7 @@ namespace LearnAppServerAPI.Controllers
                 if (oldUser == null) return NotFound($"Could not find user with id equal {id}");
 
                 _mapper.Map(model, oldUser);
+                oldUser.Id= id;
 
                 if (await _repository.SaveChangesAsync())
                     return _mapper.Map<UserModel>(oldUser);
