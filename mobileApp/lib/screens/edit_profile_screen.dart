@@ -33,6 +33,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController txtTwitterLink = TextEditingController();
   final TextEditingController txtAboutMe = TextEditingController();
 
+  User? currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,17 +107,53 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     HttpHelper httpHelper = HttpHelper();
     try {
       GlobalDataSingleton global = GlobalDataSingleton();
-      User tmpUser = await httpHelper.getUserById(global.LoggedUserId);
-      txtEmail.text = tmpUser.Email;
-      txtPhoneNumber.text = tmpUser.PhoneNumber;
-      txtFacebookLink.text = tmpUser.FacebookLink;
-      txtTwitterLink.text = tmpUser.TwitterLink;
-      txtAboutMe.text = tmpUser.AboutMe;
+      currentUser = await httpHelper.getUserById(global.LoggedUserId);
+      txtEmail.text = currentUser!.Email;
+      txtPhoneNumber.text = currentUser!.PhoneNumber;
+      txtFacebookLink.text = currentUser!.FacebookLink;
+      txtTwitterLink.text = currentUser!.TwitterLink;
+      txtAboutMe.text = currentUser!.AboutMe;
     } catch (e) {
       errorMessage = 'USER NOT FOUND: $e';
       Navigator.pop(context);
     }
   }
 
-  void editUser() {}
+  void editUser() {
+    currentUser!.Email = txtEmail.text;
+    currentUser!.PhoneNumber = txtPhoneNumber.text;
+    currentUser!.FacebookLink = txtFacebookLink.text;
+    currentUser!.TwitterLink = txtTwitterLink.text;
+    currentUser!.AboutMe = txtAboutMe.text;
+
+    HttpHelper httpHelper = HttpHelper();
+    try {
+      httpHelper.updateUserData(currentUser!);
+
+      _showDialog(context);
+    } catch (e) {
+      errorMessage = 'USER NOT FOUND: $e';
+      Navigator.pop(context);
+    }
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Success"),
+          content: Text("User edited succesfully!"),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

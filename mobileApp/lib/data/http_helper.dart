@@ -47,4 +47,21 @@ class HttpHelper {
     );
     if (result.statusCode != 201) throw Exception(result.body);
   }
+
+  Future<void> updateUserData(User user) async {
+    String jsonUpdatedUser = jsonEncode(user);
+
+    Uri uri = Uri.http(authority, 'api/Users/${user.Id}');
+
+    http.Response result = await http.put(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonUpdatedUser,
+    );
+    if (result.statusCode != 200) {
+      throw Exception('User could not be edited! ${result.reasonPhrase}');
+    }
+  }
 }
