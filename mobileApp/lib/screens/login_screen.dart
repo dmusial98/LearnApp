@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:my_app/data/global_data_singleton.dart';
 import 'package:my_app/data/http_helper.dart';
 import 'package:my_app/data/validator.dart';
 import 'package:my_app/shared/menu_bottom.dart';
@@ -35,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: TextField(
-                controller: txtEmail..text = 'admin1@email.com',
+                controller: txtEmail..text = 'user1@email.com',
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(hintText: 'Your e-mail address'),
               ),
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: TextField(
-                  controller: txtPassword..text = 'strongPassword1',
+                  controller: txtPassword..text = 'strongPassword2',
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   decoration: InputDecoration(hintText: 'Your password')),
@@ -90,6 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         User tmpUser = await httpHelper.getUser(email, password);
         errorMessage = 'User exists: ${tmpUser.AboutMe}';
+        GlobalDataSingleton global = GlobalDataSingleton();
+        global.LoggedUserId = tmpUser.Id;
         Navigator.pop(context);
         Navigator.pushNamed(context, '/own');
       } catch (e) {
