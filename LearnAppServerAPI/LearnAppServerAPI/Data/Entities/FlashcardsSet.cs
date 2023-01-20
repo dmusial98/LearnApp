@@ -7,6 +7,6 @@
         public int Name { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
-        public int Flashcards { get; set; }
+        public List<int> Flashcards { get; set; }
     }
 }

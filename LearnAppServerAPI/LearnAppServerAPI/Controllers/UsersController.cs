@@ -75,7 +75,7 @@ namespace LearnAppServerAPI.Controllers
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
-            
+
         }
 
         [HttpPost]
@@ -110,8 +110,12 @@ namespace LearnAppServerAPI.Controllers
                 var oldUser = await _repository.GetUserByIdAsync(id);
                 if (oldUser == null) return NotFound($"Could not find user with id equal {id}");
 
+
+                if (CompareUserAndUserModel(oldUser, model))
+                    return _mapper.Map<UserModel>(oldUser);
+
                 _mapper.Map(model, oldUser);
-                oldUser.Id= id;
+                oldUser.Id = id;
 
                 if (await _repository.SaveChangesAsync())
                     return _mapper.Map<UserModel>(oldUser);
@@ -143,6 +147,28 @@ namespace LearnAppServerAPI.Controllers
             }
 
             return BadRequest();
+        }
+        private bool CompareUserAndUserModel(User user, UserModel model)
+        {
+            if (user == null || model == null)
+                return true;
+
+            if (user.IsAdmin != model.IsAdmin)
+                return false;
+            if (user.Email != model.Email)
+                return false;
+            if (user.Password != model.Password)
+                return false;
+            if (user.PhoneNumber != model.PhoneNumber)
+                return false;
+            if (user.FacebookLink != model.FacebookLink)
+                return false;
+            if (user.TwitterLink != model.TwitterLink)
+                return false;
+            if (user.AboutMe != model.AboutMe) 
+                return false;
+
+            return true;
         }
     }
 }

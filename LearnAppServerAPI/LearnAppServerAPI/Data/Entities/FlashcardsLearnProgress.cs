@@ -1,10 +1,12 @@
 ﻿namespace LearnAppServerAPI.Data.Entities
 {
-    public class FlashcardsLearnProgress
+    public class FlashcardLearnProperties
     {
         public int Id { get; set; }
-        public FlashcardsSet Set { get; set; }
+        public Flashcard Flashcard { get; set; }
         public User Student { get; set; }
-
+        public bool IsFavourite { get; set; }
+        public int ProgressFlashcard { get; set; }
+        public int ProgressTypeText { get; set; }
     }
 }
