@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Routing;
 using LearnAppServerAPI.Data.Entities;
 using LearnAppServerAPI.Models;
+using AutoMapper.Configuration.Conventions;
 
 namespace LearnAppServerAPI.Controllers
 {
@@ -108,10 +109,18 @@ namespace LearnAppServerAPI.Controllers
             try
             {
                 var oldUser = await _repository.GetUserByIdAsync(id);
-                if (oldUser == null) return NotFound($"Could not find user with id equal {id}");
+                var newUser = new User();
+                _mapper.Map(model, newUser);
+                
+                if (oldUser == null) 
+                    return NotFound($"Could not find user with id equal {id}");
 
-                _mapper.Map(model, oldUser);
-                oldUser.Id= id;
+                if (!ValidateUserToEdit(newUser))
+                    return BadRequest($"Can't edit user with empty email or password field");
+
+                ReplaceUserFields(oldUser, newUser);
+                newUser.Id = id;
+                CopyUserFields(oldUser, newUser);
 
                 if (await _repository.SaveChangesAsync())
                     return _mapper.Map<UserModel>(oldUser);
@@ -143,6 +152,66 @@ namespace LearnAppServerAPI.Controllers
             }
 
             return BadRequest();
+        }
+
+        private bool ValidateUserToEdit(User user)
+        {
+            if(String.IsNullOrEmpty(user.Email)) 
+                return false;
+            if(String.IsNullOrEmpty(user.Password))
+                return false;
+
+            return true;
+        }
+
+        private void ReplaceUserFields(User oldUser, User newUser)
+        {
+            if(oldUser == null) return;
+            if(newUser == null) return;
+
+            if (newUser.PhoneNumber == null)
+                if (!String.IsNullOrEmpty(oldUser.PhoneNumber))
+                    newUser.PhoneNumber = oldUser.PhoneNumber;
+                else
+                    newUser.PhoneNumber = string.Empty;
+
+            if (newUser.FacebookLink == null)
+                if (!String.IsNullOrEmpty(oldUser.FacebookLink))
+                    newUser.FacebookLink = oldUser.FacebookLink;
+                else
+                    newUser.FacebookLink = string.Empty;
+
+            if (newUser.TwitterLink == null)
+                if (!String.IsNullOrEmpty(oldUser.TwitterLink))
+                    newUser.TwitterLink = oldUser.TwitterLink;
+                else
+                    newUser.TwitterLink = string.Empty;
+
+            if (newUser.AboutMe == null)
+                if (!String.IsNullOrEmpty(oldUser.AboutMe))
+                    newUser.AboutMe = oldUser.AboutMe;
+                else
+                    newUser.AboutMe = string.Empty;
+
+            return;            
+        }
+
+        private void CopyUserFields(User oldUser, User newUser)
+        {
+            if(oldUser == null|| newUser == null) 
+                return;
+
+            oldUser.Id= newUser.Id;
+            oldUser.IsAdmin = newUser.IsAdmin;
+            oldUser.Email = newUser.Email;
+
+            oldUser.Password = newUser.Password;
+            oldUser.PhoneNumber = newUser.PhoneNumber;
+            oldUser.FacebookLink = newUser.FacebookLink;
+            oldUser.TwitterLink = newUser.TwitterLink;
+            oldUser.AboutMe = newUser.AboutMe;
+
+            return;
         }
     }
 }
