@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_app/screens/edit_profile_screen.dart';
+import 'package:my_app/screens/flashcards_screen.dart';
 import '../screens/login_screen.dart';
 import '../screens/search_screen.dart';
 import '../screens/own_screen.dart';
@@ -20,6 +21,7 @@ class MenuDrawer extends StatelessWidget {
   List<Widget> buildMenuItems(BuildContext context) {
     final List<String> menuTitles = [
       'Main',
+      'Flashcards',
       'Edit account',
       'About us',
       'Log out'
@@ -41,6 +43,9 @@ class MenuDrawer extends StatelessWidget {
               switch (element) {
                 case 'Main':
                   screen = const OwnScreen();
+                  break;
+                case 'Flashcards':
+                  screen = const FlashcardScreen();
                   break;
                 case 'Edit account':
                   screen = const EditProfileScreen();
