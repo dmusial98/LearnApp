@@ -110,7 +110,6 @@ namespace LearnAppServerAPI.Controllers
                 var oldUser = await _repository.GetUserByIdAsync(id);
                 if (oldUser == null) return NotFound($"Could not find user with id equal {id}");
 
-
                 if (CompareUserAndUserModel(oldUser, model))
                     return _mapper.Map<UserModel>(oldUser);
 

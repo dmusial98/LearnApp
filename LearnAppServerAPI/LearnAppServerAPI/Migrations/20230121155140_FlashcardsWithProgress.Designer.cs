@@ -4,6 +4,7 @@ using LearnAppServerAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LearnAppServerAPI.Migrations
 {
     [DbContext(typeof(LearnAppServerAPIContext))]
-    partial class LearnAppServerAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20230121155140_FlashcardsWithProgress")]
+    partial class FlashcardsWithProgress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,49 +120,6 @@ namespace LearnAppServerAPI.Migrations
                             Back = "szafa",
                             FlashcardsSetId = 2,
                             Front = "wardrobe"
-                        });
-                });
-
-            modelBuilder.Entity("LearnAppServerAPI.Data.Entities.FlashcardLearnProperties", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("FlashcardId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsFavourite")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProgressFlashcard")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProgressTypeText")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FlashcardId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("FlashcardLearnProperties");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            FlashcardId = 1,
-                            IsFavourite = false,
-                            ProgressFlashcard = 0,
-                            ProgressTypeText = 0,
-                            StudentId = 1
                         });
                 });
 
@@ -279,25 +239,6 @@ namespace LearnAppServerAPI.Migrations
                     b.HasOne("LearnAppServerAPI.Data.Entities.FlashcardsSet", null)
                         .WithMany("Flashcards")
                         .HasForeignKey("FlashcardsSetId");
-                });
-
-            modelBuilder.Entity("LearnAppServerAPI.Data.Entities.FlashcardLearnProperties", b =>
-                {
-                    b.HasOne("LearnAppServerAPI.Data.Entities.Flashcard", "Flashcard")
-                        .WithMany()
-                        .HasForeignKey("FlashcardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LearnAppServerAPI.Data.Entities.User", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Flashcard");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("LearnAppServerAPI.Data.Entities.FlashcardsSet", b =>

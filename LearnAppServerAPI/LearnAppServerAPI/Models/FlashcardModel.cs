@@ -1,6 +1,6 @@
-﻿namespace LearnAppServerAPI.Data.Entities
+﻿namespace LearnAppServerAPI.Models
 {
-    public class Flashcard
+    public class FlashcardModel
     {
         public int Id { get; set; }
         public string Front { get; set; }

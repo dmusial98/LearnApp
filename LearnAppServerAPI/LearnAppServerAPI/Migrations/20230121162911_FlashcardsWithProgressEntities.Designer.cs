@@ -4,6 +4,7 @@ using LearnAppServerAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LearnAppServerAPI.Migrations
 {
     [DbContext(typeof(LearnAppServerAPIContext))]
-    partial class LearnAppServerAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20230121162911_FlashcardsWithProgressEntities")]
+    partial class FlashcardsWithProgressEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,12 +1,12 @@
-﻿namespace LearnAppServerAPI.Data.Entities
+﻿namespace LearnAppServerAPI.Models
 {
-    public class FlashcardsSet
+    public class FlashcardsSetModel
     {
         public int Id { get; set; }
-        public User Editor { get; set; }
+        public UserModel Editor { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
-        public List<Flashcard> Flashcards { get; set; }
+        public List<FlashcardModel> Flashcards { get; set; }
     }
 }

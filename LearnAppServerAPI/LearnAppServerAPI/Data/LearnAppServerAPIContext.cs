@@ -12,7 +12,7 @@ namespace LearnAppServerAPI.Data
     public class LearnAppServerAPIContext : DbContext
     {
         private readonly IConfiguration _config;
-        
+
         public LearnAppServerAPIContext(DbContextOptions options, IConfiguration config) : base(options)
         {
             _config = config;
@@ -52,6 +52,110 @@ namespace LearnAppServerAPI.Data
                     AboutMe = "I'm normal user"
                 }
             );
+
+            modelBuilder.Entity<Flashcard>().HasData(
+                new
+                {
+                    Id = 1,
+                    Front = "dog",
+                    Back = "pies",
+                    FlashcardsSetId = 1
+                },
+                new
+                {
+                    Id = 2,
+                    Front = "cat",
+                    Back = "kot",
+                    FlashcardsSetId = 1
+                },
+                new
+                {
+                    Id = 3,
+                    Front = "crocodile",
+                    Back = "krokodyl",
+                    FlashcardsSetId = 1
+                },
+                new
+                {
+                    Id = 4,
+                    Front = "bird",
+                    Back = "ptak",
+                    FlashcardsSetId = 1
+                },
+                new
+                {
+                    Id = 5,
+                    Front = "hamster",
+                    Back = "chomik",
+                    FlashcardsSetId = 1
+                },
+                new
+                {
+                    Id = 6,
+                    Front = "table",
+                    Back = "stół",
+                    FlashcardsSetId = 2
+                },
+                new
+                {
+                    Id = 7,
+                    Front = "bed",
+                    Back = "łóżko",
+                    FlashcardsSetId = 2
+                },
+                new
+                {
+                    Id = 8,
+                    Front = "chair",
+                    Back = "krzesło",
+                    FlashcardsSetId = 2
+                },
+                new
+                {
+                    Id = 9,
+                    Front = "desk",
+                    Back = "biurko",
+                    FlashcardsSetId = 2
+                },
+                new
+                {
+                    Id = 10,
+                    Front = "wardrobe",
+                    Back = "szafa",
+                    FlashcardsSetId = 2
+                }
+                );
+
+            modelBuilder.Entity<FlashcardsSet>().HasData(
+                new
+                {
+                    Id = 1,
+                    EditorId = 1,
+                    Name = "Animals",
+                    Description = "Flashcards with animals.",
+                    Date = new DateTime(2023, 1, 1, 10, 28, 0),
+                },
+                new
+                {
+                    Id = 2,
+                    EditorId = 2,
+                    Name = "Furniture",
+                    Description = "Flashcards with furniture.",
+                    Date = new DateTime(2023, 1, 2, 18, 2, 57),
+                }
+                );
+
+            modelBuilder.Entity<FlashcardLearnProperties>().HasData(
+                new
+                {
+                    Id = 1,
+                    FlashcardId = 1,
+                    StudentId = 1,
+                    IsFavourite = false,
+                    ProgressFlashcard = 0,
+                    ProgressTypeText = 0,
+                }
+                );
         }
     }
 }
