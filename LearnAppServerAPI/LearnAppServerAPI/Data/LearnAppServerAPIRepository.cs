@@ -54,18 +54,79 @@ namespace CoreLearnApp.Data
         {
             var query = _context.Users.Where(u => u.Id == id);
 
-            return await query.FirstAsync();
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<User> GetUserByEmailAndPasswordAsync(string email, string password)
         {
             var query = _context.Users.Where(u => u.Email == email && u.Password == password);
-            return await query.FirstAsync();
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
             var query = _context.Users.Where(u => u.Email == email);
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<Flashcard[]> GetAllFlashcardsAsync()
+        {
+            var query = _context.Flashcards;
+
+            return await query.ToArrayAsync(); 
+        }
+
+        public async Task<Flashcard> GetFlashcardByIdAsync(int id)
+        {
+            var query = _context.Flashcards.Where(f => f.Id == id);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<Flashcard[]> GetFlashcardsByFlashcardSetIdAsync(int setId)
+        {
+            var query = _context.Flashcards.Where(f => f.FlashcardsSetId == setId);
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<FlashcardsSet[]> GetAllFlashcardsSetsAsync()
+        {
+            var query = _context.FlashcardsSets;
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<FlashcardsSet> GetFlashcardsSetByIdAsync(int setId, bool withFlashcards, bool withEditor)
+        {
+            var query = _context.FlashcardsSets.Where(s => s.Id == setId);
+            
+            if(withFlashcards)
+                query = query.Include(s => s.Flashcards);
+
+            if (withEditor)
+                query = query.Include(s => s.Editor);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<FlashcardLearnProperties[]> GetAllFlashcardLearnPropertiesAsync()
+        {
+            var query = _context.FlashcardLearnProperties;
+
+            return await query.ToArrayAsync();
+        }
+
+        public async Task<FlashcardLearnProperties> GetFlashcardLearnPropertiesById(int id, bool withFlashcard, bool withStudent)
+        {
+            var query = _context.FlashcardLearnProperties.Where(f => f.Id == id);
+
+            if (withFlashcard)
+                query = query.Include(f => f.Flashcard);
+
+            if(withStudent)
+                query = query.Include(f => f.Student);
+
             return await query.FirstOrDefaultAsync();
         }
     }

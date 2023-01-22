@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using LearnAppServerAPI.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 
 namespace LearnAppServerAPI.Data
 {
@@ -19,6 +21,9 @@ namespace LearnAppServerAPI.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Flashcard> Flashcards { get; set; }
+        public DbSet<FlashcardsSet> FlashcardsSets { get; set; }
+        public DbSet<FlashcardLearnProperties> FlashcardLearnProperties { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

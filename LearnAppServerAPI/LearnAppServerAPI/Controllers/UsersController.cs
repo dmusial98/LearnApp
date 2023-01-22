@@ -1,13 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using CoreLearnAppServerAPI.Data;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Routing;
 using LearnAppServerAPI.Data.Entities;
 using LearnAppServerAPI.Models;
 

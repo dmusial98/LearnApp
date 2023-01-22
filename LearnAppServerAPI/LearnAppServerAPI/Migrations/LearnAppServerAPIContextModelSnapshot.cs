@@ -34,7 +34,7 @@ namespace LearnAppServerAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FlashcardsSetId")
+                    b.Property<int>("FlashcardsSetId")
                         .HasColumnType("int");
 
                     b.Property<string>("Front")
@@ -45,7 +45,7 @@ namespace LearnAppServerAPI.Migrations
 
                     b.HasIndex("FlashcardsSetId");
 
-                    b.ToTable("Flashcard");
+                    b.ToTable("Flashcards");
 
                     b.HasData(
                         new
@@ -189,7 +189,7 @@ namespace LearnAppServerAPI.Migrations
 
                     b.HasIndex("EditorId");
 
-                    b.ToTable("FlashcardsSet");
+                    b.ToTable("FlashcardsSets");
 
                     b.HasData(
                         new
@@ -278,7 +278,9 @@ namespace LearnAppServerAPI.Migrations
                 {
                     b.HasOne("LearnAppServerAPI.Data.Entities.FlashcardsSet", null)
                         .WithMany("Flashcards")
-                        .HasForeignKey("FlashcardsSetId");
+                        .HasForeignKey("FlashcardsSetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LearnAppServerAPI.Data.Entities.FlashcardLearnProperties", b =>

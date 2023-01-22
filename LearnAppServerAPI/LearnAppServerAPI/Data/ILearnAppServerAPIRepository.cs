@@ -17,5 +17,18 @@ namespace CoreLearnAppServerAPI.Data
         Task<User> GetUserByIdAsync(int id);
         Task<User> GetUserByEmailAndPasswordAsync(string login, string password);
         Task<User> GetUserByEmailAsync(string login);
+
+        //Flashcards
+        Task<Flashcard[]> GetAllFlashcardsAsync();
+        Task<Flashcard> GetFlashcardByIdAsync(int id);
+        Task<Flashcard[]> GetFlashcardsByFlashcardSetIdAsync(int setId);
+
+        //FlashcardsSet
+        Task<FlashcardsSet[]> GetAllFlashcardsSetsAsync();
+        Task<FlashcardsSet> GetFlashcardsSetByIdAsync(int setId, bool withFlashcards, bool withEditor);
+
+        //FlashcardLearnProperties
+        Task<FlashcardLearnProperties[]> GetAllFlashcardLearnPropertiesAsync();
+        Task<FlashcardLearnProperties> GetFlashcardLearnPropertiesById(int id, bool withFlashcard, bool withStudent);
     }
 }
