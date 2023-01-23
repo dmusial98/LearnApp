@@ -60,9 +60,89 @@ namespace LearnAppServerAPI.Controllers
             }
         }
 
-        //public async Task<ActionResult<FlashcardsSetModel>> Get()
-        //{
+        [HttpPost]
+        public async Task<ActionResult<FlashcardsSetModel>> Post(FlashcardsSetModel model)
+        {
+            try
+            {
+                var flashcardsSet = _mapper.Map<FlashcardsSet>(model);
+                _repository.Add(flashcardsSet);
 
-        //}
+                if (await _repository.SaveChangesAsync())
+                    return Created($"/api/flashcardssets", _mapper.Map<FlashcardsSetModel>(flashcardsSet));
+                
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"{ex.Message}");
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<FlashcardsSetModel>> Put(int id, FlashcardsSetModel model)
+        {
+            try
+            {
+                var oldFlashcardsSet = await _repository.GetFlashcardsSetByIdAsync(id, withFlashcards: false, withEditor: false);
+                if (oldFlashcardsSet == null)
+                    return NotFound($"Could not find flashcards set with id equal {id}");
+
+                if (CompareFlashcardsSetAndFlashcardsSetModel(oldFlashcardsSet, model))
+                    return _mapper.Map<FlashcardsSetModel>(oldFlashcardsSet);
+
+                _mapper.Map(model, oldFlashcardsSet);
+                oldFlashcardsSet.Id = id;
+
+                if (await _repository.SaveChangesAsync())
+                    return _mapper.Map<FlashcardsSetModel>(oldFlashcardsSet);
+
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"{ex.Message}");
+            }
+
+            return BadRequest();
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var oldFlashcardsSet = await _repository.GetFlashcardsSetByIdAsync(id, withFlashcards: false, withEditor: false);
+                if (oldFlashcardsSet == null) return NotFound($"Could not find flashcard with id equal {id}");
+
+                _repository.Delete(oldFlashcardsSet);
+
+                if (await _repository.SaveChangesAsync())
+                    return Ok();
+            }
+            catch (Exception exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"{exception.Message}");
+            }
+
+            return BadRequest();
+        }
+
+        private bool CompareFlashcardsSetAndFlashcardsSetModel(FlashcardsSet flashcardsSet, FlashcardsSetModel model)
+        {
+            if (flashcardsSet == null || model == null)
+                return true;
+
+            if (flashcardsSet.EditorId != model.EditorId)
+                return false;
+            if (flashcardsSet.Name != model.Name)
+                return false;
+            if (flashcardsSet.Description != model.Description)
+                return false;
+            if(flashcardsSet.Date != model.Date)
+                return false;
+
+            return true;
+        }
     }
 }

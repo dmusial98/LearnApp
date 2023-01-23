@@ -19,6 +19,9 @@ namespace LearnAppServerAPI.Data
 
             this.CreateMap<FlashcardLearnProperties, FlashcardLearnPropertiesModel>()
                 .ReverseMap();
+
+            this.CreateMap<Flashcard[], FlashcardModel[]>()
+                .ReverseMap();
         }
     }
 }
