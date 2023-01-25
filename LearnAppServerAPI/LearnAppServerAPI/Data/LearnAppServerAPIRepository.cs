@@ -117,7 +117,7 @@ namespace CoreLearnApp.Data
             return await query.ToArrayAsync();
         }
 
-        public async Task<FlashcardLearnProperties> GetFlashcardLearnPropertiesById(int id, bool withFlashcard, bool withStudent)
+        public async Task<FlashcardLearnProperties> GetFlashcardLearnPropertiesByIdAsync(int id, bool withFlashcard, bool withStudent)
         {
             var query = _context.FlashcardLearnProperties.Where(f => f.Id == id);
 
@@ -125,6 +125,19 @@ namespace CoreLearnApp.Data
                 query = query.Include(f => f.Flashcard);
 
             if(withStudent)
+                query = query.Include(f => f.Student);
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<FlashcardLearnProperties> GetFlashcardLearnPropertiesByFlashcardIdAndStudentId(int FlashcardId, int StudentId, bool withFlashcard, bool withStudent)
+        {
+            var query = _context.FlashcardLearnProperties.Where(f => f.FlashcardId == FlashcardId && f.StudentId == StudentId);
+
+            if (withFlashcard)
+                query = query.Include(f => f.Flashcard);
+
+            if (withStudent)
                 query = query.Include(f => f.Student);
 
             return await query.FirstOrDefaultAsync();

@@ -41,7 +41,7 @@ namespace LearnAppServerAPI.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<FlashcardsSetModel>> Get(int id, bool withFlashcards = false, bool withEditor = false)
         {
             try

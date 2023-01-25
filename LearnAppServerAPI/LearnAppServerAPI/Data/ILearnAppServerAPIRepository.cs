@@ -29,6 +29,7 @@ namespace CoreLearnAppServerAPI.Data
 
         //FlashcardLearnProperties
         Task<FlashcardLearnProperties[]> GetAllFlashcardLearnPropertiesAsync();
-        Task<FlashcardLearnProperties> GetFlashcardLearnPropertiesById(int id, bool withFlashcard, bool withStudent);
+        Task<FlashcardLearnProperties> GetFlashcardLearnPropertiesByIdAsync(int id, bool withFlashcard, bool withStudent);
+        Task<FlashcardLearnProperties> GetFlashcardLearnPropertiesByFlashcardIdAndStudentId(int FlashcardId, int StudentId, bool withFlashcard, bool withStudent);
     }
 }
