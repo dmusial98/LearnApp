@@ -1,0 +1,11 @@
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/data/icudtl.dat
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/flutter_windows.dll
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/data/flutter_assets/AssetManifest.json
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/data/flutter_assets/assets/sea.jpg
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/data/flutter_assets/FontManifest.json
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/data/flutter_assets/kernel_blob.bin
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/data/flutter_assets/NOTICES
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/data/flutter_assets/NOTICES.Z
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+C:/Users/Dawid/source/repos/LearnApp/mobileApp/build/windows/runner/Debug/data/flutter_assets/shaders/ink_sparkle.frag

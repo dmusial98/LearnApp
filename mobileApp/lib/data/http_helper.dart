@@ -2,6 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:my_app/data/user.dart';
+import 'package:my_app/data/flashcard.dart';
 
 class HttpHelper {
   final String authority = '10.0.2.2:5000'; // api.openweathermap.org
@@ -63,5 +64,16 @@ class HttpHelper {
     if (result.statusCode != 200) {
       throw Exception('User could not be edited! ${result.reasonPhrase}');
     }
+  }
+
+  Future<Flashcard> getFlashcardById(int id) async {
+    Uri uri = Uri.http(authority, 'api/flashcards/${id}');
+    http.Response result = await http.get(uri);
+
+    if (result.statusCode != 200) throw Exception('Flahcard error');
+
+    Map<String, dynamic> data = json.decode(result.body);
+    Flashcard flashcard = Flashcard.fromJson(data);
+    return flashcard;
   }
 }
