@@ -4,9 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:my_app/shared/menu_bottom.dart';
 
 import '../shared/menu_drawer.dart';
+import '../shared/set_list_item_widget.dart';
 
-class ExploreScreen extends StatelessWidget {
+class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
+
+  @override
+  State<ExploreScreen> createState() => _ExploreScreenState();
+}
+
+class _ExploreScreenState extends State<ExploreScreen> {
+  List<Widget> setListItems = <Widget>[]; // same as '= List<Widget>()'
 
   @override
   Widget build(BuildContext context) {
@@ -23,37 +31,20 @@ class ExploreScreen extends StatelessWidget {
             child: Center(
                 child: Container(
               padding: const EdgeInsets.all(24),
-              child: ListView(children: [
-                Container(
-                    padding: const EdgeInsets.all(24),
-                    margin: EdgeInsets.only(bottom: 10),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      color: Colors.white70,
-                    ),
-                    child: const Text('Start screen',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 22, shadows: [
-                          Shadow(
-                              offset: Offset(1.0, 1.0),
-                              blurRadius: 2.0,
-                              color: Colors.grey)
-                        ]))),
-                Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      color: Colors.white70,
-                    ),
-                    child: const Text('Start screen',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 22, shadows: [
-                          Shadow(
-                              offset: Offset(1.0, 1.0),
-                              blurRadius: 2.0,
-                              color: Colors.grey)
-                        ])))
-              ]),
+              child: ListView(children: setListItems),
             ))));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    setListItems.add(SetListItemWidget(title: '11111'));
+    setListItems.add(SetListItemWidget(title: '222222'));
+    setListItems.add(SetListItemWidget(title: '333333'));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //loadUserData();
+    });
   }
 }
