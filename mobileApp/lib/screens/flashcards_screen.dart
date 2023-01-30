@@ -3,6 +3,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:my_app/data/http_helper.dart';
 
 import '../data/flashcard.dart';
+import 'package:my_app/data/flashcards_set.dart';
 
 class FlashcardScreen extends StatefulWidget {
   const FlashcardScreen({super.key});
@@ -18,14 +19,16 @@ class _FlashcardState extends State<FlashcardScreen> {
     );
   }
 
-  Future<Flashcard> _getFlashcard() async {
+  Future<FlashcardsSet> _getFlashcardsSet() async {
     HttpHelper httpHelper = HttpHelper();
 
     try {
-      Flashcard tmpFlashcard = await httpHelper.getFlashcardById(1);
+      FlashcardsSet tmpFlashcard =
+          await httpHelper.getFlashcardsSetById(1, true);
       return tmpFlashcard;
     } catch (e) {
-      return Flashcard(0, 'a', 'b', 10);
+      return FlashcardsSet(0, 0, '', '', '',
+          new List<Flashcard>.filled(1, new Flashcard(0, 'c', 'd', 0)));
     }
   }
 
@@ -59,13 +62,15 @@ class _FlashcardState extends State<FlashcardScreen> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                FutureBuilder<Flashcard>(
-                    future: _getFlashcard(),
+                FutureBuilder<FlashcardsSet>(
+                    future: _getFlashcardsSet(),
                     builder: (BuildContext _context,
-                        AsyncSnapshot<Flashcard> snapshot) {
+                        AsyncSnapshot<FlashcardsSet> snapshot) {
                       List<Widget> children;
                       if (snapshot.hasData) {
-                        children = <Widget>[Text('${snapshot.data?.Front}')];
+                        children = <Widget>[
+                          Text('${snapshot.data?.Flashcards.first.Front}')
+                        ];
                       } else if (snapshot.hasError) {
                         children = <Widget>[
                           const Icon(
@@ -114,13 +119,15 @@ class _FlashcardState extends State<FlashcardScreen> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                FutureBuilder<Flashcard>(
-                    future: _getFlashcard(),
+                FutureBuilder<FlashcardsSet>(
+                    future: _getFlashcardsSet(),
                     builder: (BuildContext _context,
-                        AsyncSnapshot<Flashcard> snapshot) {
+                        AsyncSnapshot<FlashcardsSet> snapshot) {
                       List<Widget> children;
                       if (snapshot.hasData) {
-                        children = <Widget>[Text('${snapshot.data?.Back}')];
+                        children = <Widget>[
+                          Text('${snapshot.data?.Flashcards[0].Back}')
+                        ];
                       } else if (snapshot.hasError) {
                         children = <Widget>[
                           const Icon(

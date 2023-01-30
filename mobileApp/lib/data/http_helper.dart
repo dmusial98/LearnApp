@@ -1,11 +1,12 @@
 import 'package:http/http.dart' as http;
+import 'package:my_app/data/flashcards_set.dart';
 import 'dart:convert';
 
 import 'package:my_app/data/user.dart';
 import 'package:my_app/data/flashcard.dart';
 
 class HttpHelper {
-  final String authority = 'localhost:5000'; // api.openweathermap.org
+  final String authority = '10.0.2.2:5000'; // api.openweathermap.org
   //final String path = ; // api/Users/1/
   final String apiKey = ''; // 362713861276
 
@@ -64,6 +65,34 @@ class HttpHelper {
     if (result.statusCode != 200) {
       throw Exception('User could not be edited! ${result.reasonPhrase}');
     }
+  }
+
+  Future<FlashcardsSet> getFlashcardsSetsByEditor(int editorId) async {
+    Map<String, dynamic> parameters = {'editorId': editorId};
+
+    Uri uri = Uri.http(authority, 'api/flashcardsSets/byEditor', parameters);
+    http.Response result = await http.get(uri);
+
+    if (result.statusCode != 200) throw Exception('Flashcards set error');
+
+    Map<String, dynamic> data = json.decode(result.body);
+    FlashcardsSet set = FlashcardsSet.fromJson(data);
+    return set;
+  }
+
+  Future<FlashcardsSet> getFlashcardsSetById(
+      int id, bool withFlashcards) async {
+    Map<String, dynamic> parameters = {
+      'withFlashcards': withFlashcards.toString()
+    };
+    Uri uri = Uri.http(authority, 'api/flashcardsSets/${id}', parameters);
+    http.Response result = await http.get(uri);
+
+    if (result.statusCode != 200) throw Exception('Flashcards set error');
+
+    Map<String, dynamic> data = json.decode(result.body);
+    FlashcardsSet set = FlashcardsSet.fromJson(data);
+    return set;
   }
 
   Future<Flashcard> getFlashcardById(int id) async {

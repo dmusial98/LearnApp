@@ -10,4 +10,5 @@ class GlobalDataSingleton {
   GlobalDataSingleton._internal();
 
   int LoggedUserId = 0;
+  int FlashcardsSetId = -1;
 }
