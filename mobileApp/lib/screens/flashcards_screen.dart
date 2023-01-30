@@ -12,8 +12,6 @@ class FlashcardScreen extends StatefulWidget {
 }
 
 class _FlashcardState extends State<FlashcardScreen> {
-  Future<String>? _front;
-
   _renderBg() {
     return Container(
       decoration: BoxDecoration(color: Color.fromARGB(255, 255, 255, 255)),

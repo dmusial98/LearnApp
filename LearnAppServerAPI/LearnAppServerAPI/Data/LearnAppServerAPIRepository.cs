@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using LearnAppServerAPI.Data;
 using LearnAppServerAPI.Data.Entities;
 using CoreLearnAppServerAPI.Data;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CoreLearnApp.Data
 {
@@ -90,11 +91,19 @@ namespace CoreLearnApp.Data
             return await query.ToArrayAsync();
         }
 
-        public async Task<FlashcardsSet[]> GetAllFlashcardsSetsAsync()
+        public async Task<FlashcardsSet[]> GetAllFlashcardsSetsAsync(bool withPrivateSets = false)
         {
-            var query = _context.FlashcardsSets;
 
-            return await query.ToArrayAsync();
+            if (withPrivateSets)
+            {
+                var query = _context.FlashcardsSets;
+                return await query.ToArrayAsync();
+            }
+            else
+            {
+                var query = _context.FlashcardsSets.Where(s => s.IsPublic);
+                return await query.ToArrayAsync();
+            }
         }
 
         public async Task<FlashcardsSet> GetFlashcardsSetByIdAsync(int setId, bool withFlashcards, bool withEditor)
@@ -108,6 +117,19 @@ namespace CoreLearnApp.Data
                 query = query.Include(s => s.Editor);
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<FlashcardsSet> GetFlashcardsSetByEditor(int id, bool withFlashcards, bool withEditor)
+        {
+            var query = _context.FlashcardsSets.Where(s => s.EditorId== id);
+
+            if (withFlashcards)
+                query = query.Include(s => s.Flashcards);
+
+            if(withEditor)
+                query.Include(s => s.Editor);
+
+            return await query?.FirstOrDefaultAsync();
         }
 
         public async Task<FlashcardLearnProperties[]> GetAllFlashcardLearnPropertiesAsync()
