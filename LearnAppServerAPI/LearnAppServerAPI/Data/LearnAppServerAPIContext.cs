@@ -138,6 +138,7 @@ namespace LearnAppServerAPI.Data
                     EditorId = 1,
                     Name = "Animals",
                     Description = "Flashcards with animals.",
+                    IsPublic = true,
                     Date = new DateTime(2023, 1, 1, 10, 28, 0),
                 },
                 new
@@ -146,6 +147,7 @@ namespace LearnAppServerAPI.Data
                     EditorId = 2,
                     Name = "Furniture",
                     Description = "Flashcards with furniture.",
+                    IsPublic = false,
                     Date = new DateTime(2023, 1, 2, 18, 2, 57),
                 }
                 );

@@ -31,14 +31,12 @@ namespace LearnAppServerAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Back")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FlashcardsSetId")
                         .HasColumnType("int");
 
                     b.Property<string>("Front")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -175,14 +173,15 @@ namespace LearnAppServerAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EditorId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -198,6 +197,7 @@ namespace LearnAppServerAPI.Migrations
                             Date = new DateTime(2023, 1, 1, 10, 28, 0, 0, DateTimeKind.Unspecified),
                             Description = "Flashcards with animals.",
                             EditorId = 1,
+                            IsPublic = true,
                             Name = "Animals"
                         },
                         new
@@ -206,6 +206,7 @@ namespace LearnAppServerAPI.Migrations
                             Date = new DateTime(2023, 1, 2, 18, 2, 57, 0, DateTimeKind.Unspecified),
                             Description = "Flashcards with furniture.",
                             EditorId = 2,
+                            IsPublic = false,
                             Name = "Furniture"
                         });
                 });
@@ -219,30 +220,24 @@ namespace LearnAppServerAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AboutMe")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FacebookLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TwitterLink")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -23,11 +23,11 @@ namespace LearnAppServerAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<FlashcardsSetModel[]>> Get()
+        public async Task<ActionResult<FlashcardsSetModel[]>> Get(bool withPrivateSets = false)
         {
             try
             {
-                var result = await _repository.GetAllFlashcardsSetsAsync();
+                var result = await _repository.GetAllFlashcardsSetsAsync(withPrivateSets);
 
                 if (result is not null && result.Length != 0)
                     return _mapper.Map<FlashcardsSetModel[]>(result);
@@ -59,6 +59,26 @@ namespace LearnAppServerAPI.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
+
+        [HttpGet]
+        [Route("byEditor")]
+        public async Task<ActionResult<FlashcardsSetModel>> Get(int editorId)
+        {
+            try
+            {
+                var result = await _repository.GetFlashcardsSetByEditor(editorId, withFlashcards: true, withEditor: false);
+                
+                if(result is null)
+                    return NotFound();
+
+                return _mapper.Map<FlashcardsSetModel>(result);
+            }
+            catch (Exception ex) 
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
+            }
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<FlashcardsSetModel>> Post(FlashcardsSetModel model)
