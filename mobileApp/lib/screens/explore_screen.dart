@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/shared/menu_bottom.dart';
 
+import '../data/flashcard.dart';
+import '../data/flashcards_set.dart';
+import '../data/http_helper.dart';
 import '../shared/menu_drawer.dart';
 import '../shared/set_list_item_widget.dart';
 
@@ -44,7 +47,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
     setListItems.add(SetListItemWidget(title: '333333'));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      //loadUserData();
+      loadAllFlashcardsSets();
     });
+  }
+
+  Future<void> loadAllFlashcardsSets() async {
+    HttpHelper httpHelper = HttpHelper();
+    FlashcardsSet set = await httpHelper.getAllFlashcardsSet();
+    set;
   }
 }

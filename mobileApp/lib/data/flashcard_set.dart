@@ -7,3 +7,6 @@
 //   DateTime Date { get; set; }
 //   List<FlashcardModel> Flashcards { get; set; }
 // }
+
+// 1. pobierane jako tablice
+// 2. w post nie trzeba wszystkie przeslac
