@@ -106,17 +106,17 @@ class HttpHelper {
     return flashcard;
   }
 
-  Future<FlashcardsSet> getAllFlashcardsSet() async {
+  Future<List<FlashcardsSet>> getAllFlashcardsSet() async {
     Uri uri = Uri.http(authority, 'api/FlashcardsSets');
     http.Response result = await http.get(uri);
 
     if (result.statusCode != 200) throw Exception('Flashcard sets GET error');
 
-    List<Map<String, dynamic>> data = json.decode(result.body);
-
-    List<FlashcardsSet> flashcardsSetList;
-    // for each - iterowac i zwrocic liste flashcardSetow, potem w widgecie dodawac do customowych elementow
-    FlashcardsSet flashcardsSet = FlashcardsSet.fromJson(data[0]);
-    return flashcardsSet;
+    List<dynamic> list = json.decode(result.body);
+    List<FlashcardsSet> flashcardsSetList = <FlashcardsSet>[];
+    for (var element in list) {
+      flashcardsSetList.add(FlashcardsSet.fromJson(element));
+    }
+    return flashcardsSetList;
   }
 }

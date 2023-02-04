@@ -18,6 +18,7 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen> {
   List<Widget> setListItems = <Widget>[]; // same as '= List<Widget>()'
+  List<FlashcardsSet> flashcardsSetList = <FlashcardsSet>[];
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +43,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
   void initState() {
     super.initState();
 
-    setListItems.add(SetListItemWidget(title: '11111'));
-    setListItems.add(SetListItemWidget(title: '222222'));
-    setListItems.add(SetListItemWidget(title: '333333'));
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadAllFlashcardsSets();
     });
@@ -53,7 +50,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   Future<void> loadAllFlashcardsSets() async {
     HttpHelper httpHelper = HttpHelper();
-    FlashcardsSet set = await httpHelper.getAllFlashcardsSet();
-    set;
+    flashcardsSetList = await httpHelper.getAllFlashcardsSet();
+
+    for (var element in flashcardsSetList) {
+      setListItems.add(SetListItemWidget(
+          title: element.Name, description: element.Description));
+    } // dodac przekazywanie calego flashcard
   }
 }

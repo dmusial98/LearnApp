@@ -3,6 +3,7 @@ import 'package:my_app/screens/add_screen.dart';
 import 'package:my_app/screens/edit_profile_screen.dart';
 import 'package:my_app/screens/explore_screen.dart';
 import 'package:my_app/screens/flashcards_screen.dart';
+import 'package:my_app/screens/flashcards_set_screen.dart';
 import 'package:my_app/screens/login_screen.dart';
 import 'package:my_app/screens/register_screen.dart';
 import 'package:my_app/screens/search_screen.dart';
@@ -34,7 +35,8 @@ class LearnApp extends StatelessWidget {
           '/add': (context) => const AddScreen(),
           '/favourites': (context) => const FavouriteScreen(),
           '/edit_profile': (context) => const EditProfileScreen(),
-          '/flashcards': (context) => const FlashcardScreen()
+          '/flashcards': (context) => const FlashcardScreen(),
+          '/flashcards_set': (context) => const FlashcardSetScreen()
         });
   }
 }
