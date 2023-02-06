@@ -1,14 +1,22 @@
 import 'package:http/http.dart' as http;
 import 'package:my_app/data/flashcards_set.dart';
 import 'dart:convert';
-
+import 'dart:io' show Platform;
 import 'package:my_app/data/user.dart';
 import 'package:my_app/data/flashcard.dart';
 
 class HttpHelper {
-  final String authority = 'localhost:5000'; // api.openweathermap.org
+  String authority = ''; // api.openweathermap.org
   //final String path = ; // api/Users/1/
   final String apiKey = ''; // 362713861276
+
+  HttpHelper() {
+    if (Platform.isAndroid) {
+      authority = '10.0.2.2:5000';
+    } else {
+      authority = 'localhost:5000';
+    }
+  }
 
   Future<User> getUser(String email, String password) async {
     Map<String, dynamic> parameters = {'email': email, 'password': password};

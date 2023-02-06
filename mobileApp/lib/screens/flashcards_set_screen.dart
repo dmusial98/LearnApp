@@ -71,6 +71,7 @@ class _FlashcardSetScreenState extends State<FlashcardSetScreen> {
   }
 
   void goToTest() {
-    Navigator.pushNamed(context, '/flashcards_set_test');
+    Navigator.pushNamed(context, '/flashcards_set_test',
+        arguments: {'flashcardSetID': flashcardsSet.Id});
   }
 }
