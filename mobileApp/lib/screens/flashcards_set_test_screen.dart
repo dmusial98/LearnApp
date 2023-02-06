@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:my_app/data/flashcard_learn_properties.dart';
 import 'package:my_app/shared/menu_bottom.dart';
 
 import '../data/flashcards_set.dart';
@@ -76,6 +77,7 @@ class _FlashcardsSetTestScreenState extends State<FlashcardsSetTestScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadFlashcardSetData();
+      loadFlashcardLearnProperties();
     });
   }
 
@@ -87,13 +89,16 @@ class _FlashcardsSetTestScreenState extends State<FlashcardsSetTestScreen> {
   void loadFlashcardSetData() async {
     HttpHelper httpHelper = HttpHelper();
     flashcardsSet =
-        await httpHelper.getFlashcardsSetById(flashcardsSet.Id, false);
+        await httpHelper.getFlashcardsSetById(flashcardsSet.Id, true);
     setState(() {
       //email = txtEmail.text;
     });
   }
 
-  void loadFlashcards() async {
-    //...
+  void loadFlashcardLearnProperties() async {
+    HttpHelper httpHelper = HttpHelper();
+    FlashcardLearnProperties flashcardLearnProperties = await httpHelper
+        .getFlashcardsLearnPropertyByFlashcardIdAndStudentId(1, 1);
+    flashcardLearnProperties; // debug
   }
 }

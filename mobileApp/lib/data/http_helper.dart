@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:my_app/data/flashcard_learn_properties.dart';
 import 'package:my_app/data/flashcards_set.dart';
 import 'dart:convert';
 import 'dart:io' show Platform;
@@ -93,7 +94,7 @@ class HttpHelper {
     Map<String, dynamic> parameters = {
       'withFlashcards': withFlashcards.toString()
     };
-    Uri uri = Uri.http(authority, 'api/flashcardsSets/${id}', parameters);
+    Uri uri = Uri.http(authority, 'api/flashcardsSets/$id', parameters);
     http.Response result = await http.get(uri);
 
     if (result.statusCode != 200) throw Exception('Flashcards set error');
@@ -104,7 +105,7 @@ class HttpHelper {
   }
 
   Future<Flashcard> getFlashcardById(int id) async {
-    Uri uri = Uri.http(authority, 'api/flashcards/${id}');
+    Uri uri = Uri.http(authority, 'api/flashcards/$id');
     http.Response result = await http.get(uri);
 
     if (result.statusCode != 200) throw Exception('Flashcard error');
@@ -126,5 +127,23 @@ class HttpHelper {
       flashcardsSetList.add(FlashcardsSet.fromJson(element));
     }
     return flashcardsSetList;
+  }
+
+  Future<FlashcardLearnProperties>
+      getFlashcardsLearnPropertyByFlashcardIdAndStudentId(
+          int flashcardId, int studentId) async {
+    Map<String, dynamic> parameters = {
+      'flashcardId': flashcardId.toString(),
+      'studentId': studentId.toString(),
+    };
+    Uri uri = Uri.http(authority,
+        'api/FlashcardsLearnProperties/byFlashcardAndStudent', parameters);
+    http.Response result = await http.get(uri);
+
+    if (result.statusCode != 200) throw Exception('Flashcards set error');
+
+    Map<String, dynamic> data = json.decode(result.body);
+    FlashcardLearnProperties set = FlashcardLearnProperties.fromJson(data);
+    return set;
   }
 }

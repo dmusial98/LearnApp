@@ -115,6 +115,48 @@ namespace LearnAppServerAPI.Migrations
                             Back = "szafa",
                             FlashcardsSetId = 2,
                             Front = "wardrobe"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Back = "poczta",
+                            FlashcardsSetId = 3,
+                            Front = "post office"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Back = "szpital",
+                            FlashcardsSetId = 3,
+                            Front = "hospital"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Back = "więzienie",
+                            FlashcardsSetId = 3,
+                            Front = "jail"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Back = "most",
+                            FlashcardsSetId = 3,
+                            Front = "bridge"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Back = "dom",
+                            FlashcardsSetId = 3,
+                            Front = "house"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Back = "wieża",
+                            FlashcardsSetId = 3,
+                            Front = "tower"
                         });
                 });
 
@@ -131,6 +173,9 @@ namespace LearnAppServerAPI.Migrations
 
                     b.Property<bool>("IsFavourite")
                         .HasColumnType("bit");
+
+                    b.Property<int>("ProgressABCDTest")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProgressFlashcard")
                         .HasColumnType("int");
@@ -155,6 +200,7 @@ namespace LearnAppServerAPI.Migrations
                             Id = 1,
                             FlashcardId = 1,
                             IsFavourite = false,
+                            ProgressABCDTest = 0,
                             ProgressFlashcard = 0,
                             ProgressTypeText = 0,
                             StudentId = 1
@@ -208,6 +254,15 @@ namespace LearnAppServerAPI.Migrations
                             EditorId = 2,
                             IsPublic = false,
                             Name = "Furniture"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Date = new DateTime(2023, 2, 2, 18, 3, 57, 0, DateTimeKind.Unspecified),
+                            Description = "My flashcards set about buildings in English.",
+                            EditorId = 1,
+                            IsPublic = true,
+                            Name = "Buildings"
                         });
                 });
 

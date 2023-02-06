@@ -9,6 +9,7 @@
         public int StudentId { get; set; }
         public bool IsFavourite { get; set; }
         public int ProgressFlashcard { get; set; }
+        public int ProgressABCDTest { get; set; }
         public int ProgressTypeText { get; set; }
     }
 }

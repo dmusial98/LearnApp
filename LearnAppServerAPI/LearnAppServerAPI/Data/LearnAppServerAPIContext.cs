@@ -128,6 +128,48 @@ namespace LearnAppServerAPI.Data
                     Front = "wardrobe",
                     Back = "szafa",
                     FlashcardsSetId = 2
+                },
+                new
+                {
+                    Id = 11,
+                    Front = "post office",
+                    Back = "poczta",
+                    FlashcardsSetId = 3
+                },
+                new
+                {
+                    Id = 12,
+                    Front = "hospital",
+                    Back = "szpital",
+                    FlashcardsSetId = 3
+                },
+                new
+                {
+                    Id = 13,
+                    Front = "jail",
+                    Back = "więzienie",
+                    FlashcardsSetId = 3
+                },
+                new
+                {
+                    Id = 14,
+                    Front = "bridge",
+                    Back = "most",
+                    FlashcardsSetId = 3
+                },
+                new
+                {
+                    Id = 15,
+                    Front = "house",
+                    Back = "dom",
+                    FlashcardsSetId = 3
+                },
+                new
+                {
+                    Id = 16,
+                    Front = "tower",
+                    Back = "wieża",
+                    FlashcardsSetId = 3
                 }
                 );
 
@@ -149,6 +191,15 @@ namespace LearnAppServerAPI.Data
                     Description = "Flashcards with furniture.",
                     IsPublic = false,
                     Date = new DateTime(2023, 1, 2, 18, 2, 57),
+                },
+                new
+                {
+                    Id = 3,
+                    EditorId = 1,
+                    Name = "Buildings",
+                    Description = "My flashcards set about buildings in English.",
+                    IsPublic = true,
+                    Date = new DateTime(2023, 2, 2, 18, 3, 57),
                 }
                 );
 
@@ -160,6 +211,7 @@ namespace LearnAppServerAPI.Data
                     StudentId = 1,
                     IsFavourite = false,
                     ProgressFlashcard = 0,
+                    ProgressABCDTest = 0,
                     ProgressTypeText = 0,
                 }
                 );
