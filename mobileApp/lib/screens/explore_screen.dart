@@ -53,8 +53,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     flashcardsSetList = await httpHelper.getAllFlashcardsSet();
 
     for (var element in flashcardsSetList) {
-      setListItems.add(SetListItemWidget(
-          title: element.Name, description: element.Description));
-    } // dodac przekazywanie calego flashcard
+      setListItems.add(SetListItemWidget(flashcardSet: element));
+    }
   }
 }

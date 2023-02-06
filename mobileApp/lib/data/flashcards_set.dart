@@ -8,6 +8,8 @@ class FlashcardsSet {
   String Date = '';
   List<Flashcard> Flashcards = [];
 
+  FlashcardsSet.empty();
+
   FlashcardsSet(this.Id, this.EditorId, this.Name, this.Description, this.Date,
       this.Flashcards);
 
