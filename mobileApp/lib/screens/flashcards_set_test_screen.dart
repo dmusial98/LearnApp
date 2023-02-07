@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:my_app/data/flashcard_learn_properties.dart';
+import 'package:my_app/data/global_data_singleton.dart';
 import 'package:my_app/shared/menu_bottom.dart';
 
+import '../data/flashcard.dart';
 import '../data/flashcards_set.dart';
 import '../data/http_helper.dart';
 import '../shared/menu_drawer.dart';
@@ -19,6 +21,11 @@ class FlashcardsSetTestScreen extends StatefulWidget {
 
 class _FlashcardsSetTestScreenState extends State<FlashcardsSetTestScreen> {
   FlashcardsSet flashcardsSet = FlashcardsSet.empty();
+  GlobalDataSingleton globalDataSingleton = GlobalDataSingleton();
+  List<Flashcard> testFlashcards = <Flashcard>[];
+  List<FlashcardLearnProperties> flashcardLearnPropertiesList =
+      <FlashcardLearnProperties>[];
+  String question = '';
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +53,7 @@ class _FlashcardsSetTestScreenState extends State<FlashcardsSetTestScreen> {
                     ),
                     child: Column(
                       children: [
-                        TestItem(text: 'Doggfdghsfgjdgsfghdsfgsfgdsgj'),
+                        TestItem(text: question),
                         GestureDetector(
                             onTap: () {
                               checkAnswer(0);
@@ -78,12 +85,45 @@ class _FlashcardsSetTestScreenState extends State<FlashcardsSetTestScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadFlashcardSetData();
       loadFlashcardLearnProperties();
+      shuffleTrainingFlashcards();
+      loadQuestion();
     });
   }
 
   void checkAnswer(int answerId) {
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('Clicked answer: $answerId')));
+  }
+
+  void loadQuestion() {
+    if (testFlashcards.isEmpty) {
+      for (var element in flashcardLearnPropertiesList) {
+        element.ProgressABCDTest = 0;
+      }
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('ABCD ratings reseted!')));
+    } else {
+      question = testFlashcards[0].Back;
+    }
+    setState(() {
+      // ...
+    });
+  }
+
+  void shuffleTrainingFlashcards() {
+    for (var element in flashcardsSet.Flashcards) {
+      if (flashcardLearnPropertiesList
+              .firstWhere((flashcardLearnProperties) =>
+                  flashcardLearnProperties.FlashcardId == element.Id)
+              .ProgressABCDTest !=
+          100) {
+        testFlashcards.add(element);
+      }
+    }
+
+    setState(() {
+      // ...
+    });
   }
 
   void loadFlashcardSetData() async {
@@ -97,8 +137,19 @@ class _FlashcardsSetTestScreenState extends State<FlashcardsSetTestScreen> {
 
   void loadFlashcardLearnProperties() async {
     HttpHelper httpHelper = HttpHelper();
-    FlashcardLearnProperties flashcardLearnProperties = await httpHelper
-        .getFlashcardsLearnPropertyByFlashcardIdAndStudentId(1, 1);
-    flashcardLearnProperties; // debug
+    for (var element in flashcardsSet.Flashcards) {
+      try {
+        flashcardLearnPropertiesList.add(await httpHelper
+            .getFlashcardsLearnPropertyByFlashcardIdAndStudentId(
+                element.Id, globalDataSingleton.LoggedUserId));
+      } catch (e) {
+        flashcardLearnPropertiesList.add(FlashcardLearnProperties(
+            0, element.Id, globalDataSingleton.LoggedUserId, false, 0, 0, 0));
+      }
+    }
+
+    setState(() {
+      //email = txtEmail.text;
+    });
   }
 }
