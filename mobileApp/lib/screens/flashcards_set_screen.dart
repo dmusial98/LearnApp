@@ -20,9 +20,7 @@ class _FlashcardsSetState extends State<FlashcardsSetScreen> {
   @override
   initState() {
     super.initState();
-    print("initState Called");
     _getFlashcardsSet();
-    print('${flashcardsSet}');
   }
 
   Future<FlashcardsSet> _getFlashcardsSet() async {
@@ -101,6 +99,7 @@ class _FlashcardsSetState extends State<FlashcardsSetScreen> {
 
   Future _goToFlashcards() async {
     Navigator.pop(context);
-    Navigator.pushNamed(context, '/flashcards');
+    Navigator.pushNamed(context, '/flashcards',
+        arguments: flashcardsSet.Flashcards);
   }
 }

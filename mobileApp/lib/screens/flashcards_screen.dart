@@ -6,13 +6,22 @@ import '../data/flashcard.dart';
 import 'package:my_app/data/flashcards_set.dart';
 
 class FlashcardScreen extends StatefulWidget {
-  const FlashcardScreen({super.key});
+  List<Flashcard> flashcards =
+      List<Flashcard>.filled(1, Flashcard(0, 'front', 'back', 0));
+
+  FlashcardScreen({required Key? key, required this.flashcards})
+      : super(key: key);
 
   @override
-  State<FlashcardScreen> createState() => _FlashcardState();
+  State<FlashcardScreen> createState() => _FlashcardState(flashcards);
 }
 
 class _FlashcardState extends State<FlashcardScreen> {
+  List<Flashcard> flashcards =
+      new List<Flashcard>.filled(1, new Flashcard(0, 'front', 'back', 0));
+
+  _FlashcardState(this.flashcards);
+
   _renderBg() {
     return Container(
       decoration: BoxDecoration(color: Color.fromARGB(255, 255, 255, 255)),
@@ -21,7 +30,6 @@ class _FlashcardState extends State<FlashcardScreen> {
 
   Future<FlashcardsSet> _getFlashcardsSet() async {
     HttpHelper httpHelper = HttpHelper();
-
     try {
       FlashcardsSet tmpFlashcard =
           await httpHelper.getFlashcardsSetById(1, true);
@@ -60,56 +68,14 @@ class _FlashcardState extends State<FlashcardScreen> {
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FutureBuilder<FlashcardsSet>(
-                    future: _getFlashcardsSet(),
-                    builder: (BuildContext _context,
-                        AsyncSnapshot<FlashcardsSet> snapshot) {
-                      List<Widget> children;
-                      if (snapshot.hasData) {
-                        children = <Widget>[
-                          Text('${snapshot.data?.Flashcards?.first.Front}')
-                        ];
-                      } else if (snapshot.hasError) {
-                        children = <Widget>[
-                          const Icon(
-                            Icons.error_outline,
-                            color: Colors.red,
-                            size: 60,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16),
-                            child: Text('Error: ${snapshot.error}'),
-                          ),
-                        ];
-                      } else {
-                        children = const <Widget>[
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: CircularProgressIndicator(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 16),
-                            child: Text('Awaiting result...'),
-                          ),
-                        ];
-                      }
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: children,
-                        ),
-                      );
-                    })
-              ]
-              // children: <Widget>[
-              //   Text('Front', style: Theme.of(context).textTheme.headline1),
-              //   Text('Click here to flip back',
-              //       style: Theme.of(context).textTheme.bodyText1),
-              // ],
-              ),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(flashcards.first.Front,
+                  style: Theme.of(context).textTheme.headline1),
+              Text('Click here to flip back',
+                  style: Theme.of(context).textTheme.bodyText1),
+            ],
+          ),
         ),
         back: Container(
           decoration: BoxDecoration(
@@ -117,57 +83,14 @@ class _FlashcardState extends State<FlashcardScreen> {
             borderRadius: BorderRadius.all(Radius.circular(8.0)),
           ),
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FutureBuilder<FlashcardsSet>(
-                    future: _getFlashcardsSet(),
-                    builder: (BuildContext _context,
-                        AsyncSnapshot<FlashcardsSet> snapshot) {
-                      List<Widget> children;
-                      if (snapshot.hasData) {
-                        children = <Widget>[
-                          Text('${snapshot.data?.Flashcards?.first.Back}')
-                        ];
-                      } else if (snapshot.hasError) {
-                        children = <Widget>[
-                          const Icon(
-                            Icons.error_outline,
-                            color: Colors.red,
-                            size: 60,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16),
-                            child: Text('Error: ${snapshot.error}'),
-                          ),
-                        ];
-                      } else {
-                        children = const <Widget>[
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: CircularProgressIndicator(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 16),
-                            child: Text('Awaiting result...'),
-                          ),
-                        ];
-                      }
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: children,
-                        ),
-                      );
-                    })
-              ]
-
-              // children: <Widget>[
-              //   Text('Back', style: Theme.of(context).textTheme.headline1),
-              //   Text('Click here to flip front',
-              //       style: Theme.of(context).textTheme.bodyText1),
-              // ],
-              ),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(flashcards.first.Back,
+                  style: Theme.of(context).textTheme.headline1),
+              Text('Click here to flip front',
+                  style: Theme.of(context).textTheme.bodyText1),
+            ],
+          ),
         ),
       ),
     );

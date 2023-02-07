@@ -9,6 +9,7 @@ import 'package:my_app/screens/search_screen.dart';
 import 'package:my_app/screens/own_screen.dart';
 import 'package:my_app/screens/flashcards_set_screen.dart';
 import 'screens/favourite_screen.dart';
+import 'data/flashcard.dart';
 
 void main() {
   runApp(const LearnApp());
@@ -21,21 +22,29 @@ class LearnApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.blueGrey,
-          brightness: Brightness.light,
-        ),
-        routes: {
-          '/': (context) => const LoginScreen(),
-          '/register': (context) => const RegisterScreen(),
-          '/own': (context) => const OwnScreen(),
-          '/search': (context) => const SearchScreen(),
-          '/explore': (context) => const ExploreScreen(),
-          '/add': (context) => const AddScreen(),
-          '/favourites': (context) => const FavouriteScreen(),
-          '/edit_profile': (context) => const EditProfileScreen(),
-          '/flashcards': (context) => const FlashcardScreen(),
-          '/flashcardsset': (context) => const FlashcardsSetScreen()
-        });
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
+        brightness: Brightness.light,
+      ),
+      routes: {
+        '/': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/own': (context) => const OwnScreen(),
+        '/search': (context) => const SearchScreen(),
+        '/explore': (context) => const ExploreScreen(),
+        '/add': (context) => const AddScreen(),
+        '/favourites': (context) => const FavouriteScreen(),
+        '/edit_profile': (context) => const EditProfileScreen(),
+        '/flashcardsset': (context) => const FlashcardsSetScreen()
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/flashcards') {
+          final value = settings.arguments as List<Flashcard>;
+          return MaterialPageRoute(
+              builder: (_) => FlashcardScreen(key: key, flashcards: value));
+        }
+        return null;
+      },
+    );
   }
 }
