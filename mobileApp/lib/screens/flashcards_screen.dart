@@ -19,6 +19,8 @@ class FlashcardScreen extends StatefulWidget {
 class _FlashcardState extends State<FlashcardScreen> {
   List<Flashcard> flashcards =
       new List<Flashcard>.filled(1, new Flashcard(0, 'front', 'back', 0));
+  int index = 0;
+  GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
 
   _FlashcardState(this.flashcards);
 
@@ -52,47 +54,72 @@ class _FlashcardState extends State<FlashcardScreen> {
   }
 
   _renderContent(BuildContext context) {
-    return Card(
-      elevation: 0.0,
-      margin: EdgeInsets.only(left: 32.0, right: 32.0, top: 20.0, bottom: 0.0),
-      color: Color(0x00000000),
-      child: FlipCard(
-        direction: FlipDirection.HORIZONTAL,
-        speed: 1500,
-        onFlipDone: (status) {
-          print(status);
-        },
-        front: Container(
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 191, 208, 15),
-            borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(flashcards.first.Front,
-                  style: Theme.of(context).textTheme.headline1),
-              Text('Click here to flip back',
-                  style: Theme.of(context).textTheme.bodyText1),
-            ],
+    return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+        image: AssetImage('assets/sea.jpg'),
+        fit: BoxFit.cover,
+      )),
+      child: Column(children: [
+        Card(
+          elevation: 0.0,
+          margin:
+              EdgeInsets.only(left: 32.0, right: 32.0, top: 20.0, bottom: 0.0),
+          color: Color(0x00000000),
+          child: FlipCard(
+            key: cardKey,
+            direction: FlipDirection.HORIZONTAL,
+            speed: 0,
+            onFlipDone: (status) {
+              print(status);
+            },
+            front: Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 191, 208, 15),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(flashcards[index].Front,
+                      style: Theme.of(context).textTheme.headline3),
+                  Text('Click here to flip back',
+                      style: Theme.of(context).textTheme.bodyText1),
+                ],
+              ),
+            ),
+            back: Container(
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 94, 223, 8),
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(flashcards[index].Back,
+                      style: Theme.of(context).textTheme.headline3),
+                  Text('Click here to flip front',
+                      style: Theme.of(context).textTheme.bodyText1),
+                ],
+              ),
+            ),
           ),
         ),
-        back: Container(
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 94, 223, 8),
-            borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(flashcards.first.Back,
-                  style: Theme.of(context).textTheme.headline1),
-              Text('Click here to flip front',
-                  style: Theme.of(context).textTheme.bodyText1),
-            ],
-          ),
-        ),
-      ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              child:
+                  ElevatedButton(onPressed: _correct, child: Text('Correct')),
+            ),
+            Container(
+              padding: const EdgeInsets.all(12),
+              child: ElevatedButton(onPressed: _wrong, child: Text('Wrong')),
+            )
+          ],
+        )
+      ]),
     );
   }
 
@@ -100,7 +127,7 @@ class _FlashcardState extends State<FlashcardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('FlipCard'),
+        title: Text('Flashcards'),
       ),
       body: Stack(
         fit: StackFit.expand,
@@ -123,5 +150,39 @@ class _FlashcardState extends State<FlashcardScreen> {
         ],
       ),
     );
+  }
+
+  _correct() {
+    //send message to server
+
+    if (index + 1 < flashcards.length)
+      index++;
+    else
+      index = 0;
+
+    if (cardKey.currentState?.isFront == false)
+      cardKey.currentState?.toggleCard();
+
+    setState(() {
+      cardKey.currentState;
+      index;
+    });
+  }
+
+  _wrong() {
+    //send message to server
+
+    if (index + 1 < flashcards.length)
+      index++;
+    else
+      index = 0;
+
+    if (cardKey.currentState?.isFront == false)
+      cardKey.currentState?.toggleCard();
+
+    setState(() {
+      cardKey.currentState;
+      index;
+    });
   }
 }
