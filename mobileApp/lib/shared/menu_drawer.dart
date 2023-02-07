@@ -6,6 +6,7 @@ import 'package:my_app/screens/flashcards_screen.dart';
 import '../screens/login_screen.dart';
 import '../screens/search_screen.dart';
 import '../screens/own_screen.dart';
+import '../screens/flashcards_set_screen.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({super.key});
@@ -21,6 +22,7 @@ class MenuDrawer extends StatelessWidget {
   List<Widget> buildMenuItems(BuildContext context) {
     final List<String> menuTitles = [
       'Main',
+      'Flashcards set',
       'Flashcards',
       'Edit account',
       'About us',
@@ -43,6 +45,9 @@ class MenuDrawer extends StatelessWidget {
               switch (element) {
                 case 'Main':
                   screen = const OwnScreen();
+                  break;
+                case 'Flashcards set':
+                  screen = const FlashcardsSetScreen();
                   break;
                 case 'Flashcards':
                   screen = const FlashcardScreen();

@@ -69,7 +69,7 @@ class _FlashcardState extends State<FlashcardScreen> {
                       List<Widget> children;
                       if (snapshot.hasData) {
                         children = <Widget>[
-                          Text('${snapshot.data?.Flashcards.first.Front}')
+                          Text('${snapshot.data?.Flashcards?.first.Front}')
                         ];
                       } else if (snapshot.hasError) {
                         children = <Widget>[
@@ -126,7 +126,7 @@ class _FlashcardState extends State<FlashcardScreen> {
                       List<Widget> children;
                       if (snapshot.hasData) {
                         children = <Widget>[
-                          Text('${snapshot.data?.Flashcards[0].Back}')
+                          Text('${snapshot.data?.Flashcards?.first.Back}')
                         ];
                       } else if (snapshot.hasError) {
                         children = <Widget>[

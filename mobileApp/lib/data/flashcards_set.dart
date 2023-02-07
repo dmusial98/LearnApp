@@ -6,7 +6,7 @@ class FlashcardsSet {
   String Name = '';
   String Description = '';
   String Date = '';
-  List<Flashcard> Flashcards = [];
+  List<Flashcard>? Flashcards = [];
 
   FlashcardsSet(this.Id, this.EditorId, this.Name, this.Description, this.Date,
       this.Flashcards);
