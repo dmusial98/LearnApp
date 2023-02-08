@@ -43,17 +43,29 @@ class _ExploreScreenState extends State<ExploreScreen> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      loadAllFlashcardsSets();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await loadAllFlashcardsSets();
+      await addSetListItemWidgets();
+      setState(() {
+        // ...
+      });
     });
   }
 
   Future<void> loadAllFlashcardsSets() async {
     HttpHelper httpHelper = HttpHelper();
     flashcardsSetList = await httpHelper.getAllFlashcardsSet();
+    setState(() {
+      // ...
+    });
+  }
 
+  Future<void> addSetListItemWidgets() async {
     for (var element in flashcardsSetList) {
       setListItems.add(SetListItemWidget(flashcardSet: element));
     }
+    setState(() {
+      // ...
+    });
   }
 }

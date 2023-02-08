@@ -146,4 +146,42 @@ class HttpHelper {
     FlashcardLearnProperties set = FlashcardLearnProperties.fromJson(data);
     return set;
   }
+
+  Future<void> createFlashcardsLearnProperties(
+      FlashcardLearnProperties flashcardLearnProperties) async {
+    List<FlashcardLearnProperties> flashcardLearnPropertiesList =
+        <FlashcardLearnProperties>[];
+    flashcardLearnPropertiesList.add(flashcardLearnProperties);
+    String jsonNewPropert = jsonEncode(flashcardLearnPropertiesList);
+
+    Uri uri = Uri.http(authority, 'api/FlashcardsLearnProperties/');
+
+    http.Response result = await http.post(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonNewPropert,
+    );
+    if (result.statusCode != 201) throw Exception(result.body);
+  }
+
+  Future<void> updateFlashcardsLearnProperties(
+      FlashcardLearnProperties flashcardsLearnProperties) async {
+    String jsonUpdatedProperty = jsonEncode(flashcardsLearnProperties);
+
+    Uri uri = Uri.http(authority,
+        'api/FlashcardsLearnProperties/${flashcardsLearnProperties.Id}');
+
+    http.Response result = await http.put(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonUpdatedProperty,
+    );
+    if (result.statusCode != 200) {
+      throw Exception('Properties could not be edited! ${result.reasonPhrase}');
+    }
+  }
 }

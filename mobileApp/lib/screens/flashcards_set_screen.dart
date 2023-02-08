@@ -62,7 +62,7 @@ class _FlashcardSetScreenState extends State<FlashcardSetScreen> {
     flashcardsSet =
         await httpHelper.getFlashcardsSetById(flashcardsSet.Id, false);
     setState(() {
-      //email = txtEmail.text;
+      // ...
     });
   }
 

@@ -10,14 +10,16 @@ class TestItem extends StatelessWidget {
       margin: const EdgeInsets.only(
           left: 32.0, right: 32.0, top: 20.0, bottom: 0.0),
       width: 700,
-      height: 50,
+      height: 80,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(20)),
         color: Colors.white70,
       ),
-      child: Center(
+      padding: const EdgeInsets.all(20),
+      child: Container(
+        alignment: Alignment.centerLeft,
         child: Text(text,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.left,
             style: const TextStyle(fontSize: 22, shadows: [
               Shadow(
                   offset: Offset(1.0, 1.0), blurRadius: 2.0, color: Colors.grey)
