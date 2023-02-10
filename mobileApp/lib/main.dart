@@ -5,6 +5,7 @@ import 'package:my_app/screens/explore_screen.dart';
 import 'package:my_app/screens/flashcards_screen.dart';
 import 'package:my_app/screens/flashcards_set_screen.dart';
 import 'package:my_app/screens/flashcards_set_test_screen.dart';
+import 'package:my_app/screens/flashcards_set_typetext_screen.dart';
 import 'package:my_app/screens/login_screen.dart';
 import 'package:my_app/screens/register_screen.dart';
 import 'package:my_app/screens/search_screen.dart';
@@ -38,7 +39,9 @@ class LearnApp extends StatelessWidget {
           '/edit_profile': (context) => const EditProfileScreen(),
           '/flashcards': (context) => const FlashcardScreen(),
           '/flashcards_set': (context) => const FlashcardSetScreen(),
-          '/flashcards_set_test': (context) => const FlashcardsSetTestScreen()
+          '/flashcards_set_test': (context) => const FlashcardsSetTestScreen(),
+          '/flashcards_set_typetext': (context) =>
+              const FlashcardsSetTypeTextScreen()
         });
   }
 }

@@ -45,6 +45,14 @@ class _FlashcardSetScreenState extends State<FlashcardSetScreen> {
               child: ElevatedButton(onPressed: goToTest, child: Text('Test')),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: ElevatedButton(
+                  onPressed: goToTypeText, child: Text('Type Text')),
+            ),
+          ),
         ])));
   }
 
@@ -72,6 +80,11 @@ class _FlashcardSetScreenState extends State<FlashcardSetScreen> {
 
   void goToTest() {
     Navigator.pushNamed(context, '/flashcards_set_test',
+        arguments: {'flashcardSetID': flashcardsSet.Id});
+  }
+
+  void goToTypeText() {
+    Navigator.pushNamed(context, '/flashcards_set_typetext',
         arguments: {'flashcardSetID': flashcardsSet.Id});
   }
 }
