@@ -179,6 +179,8 @@ namespace LearnAppServerAPI.Controllers
                 return false;
             if(flashcard.ProgressFlashcard  != model.ProgressFlashcard)
                 return false;
+            if (flashcard.ProgressABCDTest != model.ProgressABCDTest)
+                return false;
             if (flashcard.ProgressTypeText != model.ProgressTypeText)
                 return false;
 
