@@ -21,7 +21,6 @@ class MenuDrawer extends StatelessWidget {
   List<Widget> buildMenuItems(BuildContext context) {
     final List<String> menuTitles = [
       'Main',
-      'Flashcards',
       'Edit account',
       'About us',
       'Log out'
@@ -44,9 +43,6 @@ class MenuDrawer extends StatelessWidget {
                 case 'Main':
                   screen = const OwnScreen();
                   break;
-                // case 'Flashcards':
-                //   screen = const FlashcardScreen();
-                //   break;
                 case 'Edit account':
                   screen = const EditProfileScreen();
                   break;

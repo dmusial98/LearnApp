@@ -7,7 +7,6 @@ import '../data/flashcard.dart';
 import 'package:my_app/data/flashcards_set.dart';
 import '../data/flashcard_learn_properties.dart';
 import '../data/global_data_singleton.dart';
-import '../shared/menu_drawer.dart';
 
 class FlashcardScreen extends StatefulWidget {
   FlashcardsSet flashcardsSet;
