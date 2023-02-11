@@ -44,9 +44,9 @@ class MenuDrawer extends StatelessWidget {
                 case 'Main':
                   screen = const OwnScreen();
                   break;
-                case 'Flashcards':
-                  screen = const FlashcardScreen();
-                  break;
+                // case 'Flashcards':
+                //   screen = const FlashcardScreen();
+                //   break;
                 case 'Edit account':
                   screen = const EditProfileScreen();
                   break;

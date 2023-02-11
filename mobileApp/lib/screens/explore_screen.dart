@@ -65,7 +65,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       setListItems.add(SetListItemWidget(flashcardSet: element));
     }
     setState(() {
-      // ...
+      setListItems = List.from(setListItems);
     });
   }
 }

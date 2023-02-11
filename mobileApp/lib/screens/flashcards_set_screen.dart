@@ -60,14 +60,14 @@ class _FlashcardSetScreenState extends State<FlashcardSetScreen> {
   void loadFlashcardSetData() async {
     HttpHelper httpHelper = HttpHelper();
     flashcardsSet =
-        await httpHelper.getFlashcardsSetById(flashcardsSet.Id, false);
+        await httpHelper.getFlashcardsSetById(flashcardsSet.Id, true);
     setState(() {
       // ...
     });
   }
 
   void goToFlashcards() {
-    Navigator.pushNamed(context, '/flashcards');
+    Navigator.pushNamed(context, '/flashcards', arguments: flashcardsSet);
   }
 
   void goToTest() {

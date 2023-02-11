@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:my_app/data/http_helper.dart';
-
+import 'package:my_app/shared/menu_bottom.dart';
 import '../data/flashcard.dart';
 import 'package:my_app/data/flashcards_set.dart';
+import '../shared/menu_drawer.dart';
 
 class FlashcardScreen extends StatefulWidget {
-  const FlashcardScreen({super.key});
+  FlashcardsSet flashcardsSet;
+
+  FlashcardScreen({required Key? key, required this.flashcardsSet})
+      : super(key: key);
 
   @override
-  State<FlashcardScreen> createState() => _FlashcardState();
+  State<FlashcardScreen> createState() => _FlashcardState(flashcardsSet);
 }
 
 class _FlashcardState extends State<FlashcardScreen> {
+  FlashcardsSet flashcardsSet = FlashcardsSet(0, 0, 'Name', 'Description',
+      'Date', List<Flashcard>.filled(1, new Flashcard(0, 'front', 'back', 0)));
+  int index = 0;
+  GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
+
+  _FlashcardState(this.flashcardsSet);
+
   _renderBg() {
     return Container(
-      decoration:
-          const BoxDecoration(color: Color.fromARGB(255, 255, 255, 255)),
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+        image: AssetImage('assets/sea.jpg'),
+        fit: BoxFit.cover,
+      )),
     );
-  }
-
-  Future<FlashcardsSet> _getFlashcardsSet() async {
-    HttpHelper httpHelper = HttpHelper();
-
-    try {
-      FlashcardsSet tmpFlashcard =
-          await httpHelper.getFlashcardsSetById(1, true);
-      return tmpFlashcard;
-    } catch (e) {
-      return FlashcardsSet(0, 0, '', '', '',
-          List<Flashcard>.filled(1, Flashcard(0, 'c', 'd', 0)));
-    }
   }
 
   _renderAppBar(context) {
@@ -39,137 +40,54 @@ class _FlashcardState extends State<FlashcardScreen> {
       removeBottom: true,
       child: AppBar(
         elevation: 0.0,
-        backgroundColor: const Color(0x00FFFFFF),
+        backgroundColor: Color.fromARGB(0, 12, 154, 214),
       ),
     );
   }
 
   _renderContent(BuildContext context) {
-    return Card(
-      elevation: 0.0,
-      margin: const EdgeInsets.only(
-          left: 32.0, right: 32.0, top: 20.0, bottom: 0.0),
-      color: const Color(0x00000000),
-      child: FlipCard(
-        direction: FlipDirection.HORIZONTAL,
-        speed: 1500,
-        onFlipDone: (status) {
-          print(status);
-        },
-        front: Container(
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 191, 208, 15),
-            borderRadius: BorderRadius.all(Radius.circular(8.0)),
-          ),
-          child: Column(
+    return Container(
+      child: Card(
+        color: Colors.white70,
+        elevation: 0.0,
+        margin:
+            EdgeInsets.only(left: 32.0, right: 32.0, top: 20.0, bottom: 0.0),
+        child: FlipCard(
+          key: cardKey,
+          direction: FlipDirection.HORIZONTAL,
+          speed: 0,
+          onFlipDone: (status) {
+            print(status);
+          },
+          front: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                FutureBuilder<FlashcardsSet>(
-                    future: _getFlashcardsSet(),
-                    builder: (BuildContext _context,
-                        AsyncSnapshot<FlashcardsSet> snapshot) {
-                      List<Widget> children;
-                      if (snapshot.hasData) {
-                        children = <Widget>[
-                          Text('${snapshot.data?.Flashcards.first.Front}')
-                        ];
-                      } else if (snapshot.hasError) {
-                        children = <Widget>[
-                          const Icon(
-                            Icons.error_outline,
-                            color: Colors.red,
-                            size: 60,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16),
-                            child: Text('Error: ${snapshot.error}'),
-                          ),
-                        ];
-                      } else {
-                        children = const <Widget>[
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: CircularProgressIndicator(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 16),
-                            child: Text('Awaiting result...'),
-                          ),
-                        ];
-                      }
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: children,
-                        ),
-                      );
-                    })
-              ]
-              // children: <Widget>[
-              //   Text('Front', style: Theme.of(context).textTheme.headline1),
-              //   Text('Click here to flip back',
-              //       style: Theme.of(context).textTheme.bodyText1),
-              // ],
-              ),
-        ),
-        back: Container(
-          decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 94, 223, 8),
-            borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                Text(flashcardsSet.Flashcards[index].Front,
+                    style: Theme.of(context).textTheme.headline3),
+                Text('Click here to flip back',
+                    style: Theme.of(context).textTheme.bodyText1),
+              ],
+            ),
           ),
-          child: Column(
+          back: Container(
+            decoration: BoxDecoration(
+              // color: Color.fromARGB(255, 94, 223, 8),
+              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+            ),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                FutureBuilder<FlashcardsSet>(
-                    future: _getFlashcardsSet(),
-                    builder: (BuildContext _context,
-                        AsyncSnapshot<FlashcardsSet> snapshot) {
-                      List<Widget> children;
-                      if (snapshot.hasData) {
-                        children = <Widget>[
-                          Text('${snapshot.data?.Flashcards[0].Back}')
-                        ];
-                      } else if (snapshot.hasError) {
-                        children = <Widget>[
-                          const Icon(
-                            Icons.error_outline,
-                            color: Colors.red,
-                            size: 60,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16),
-                            child: Text('Error: ${snapshot.error}'),
-                          ),
-                        ];
-                      } else {
-                        children = const <Widget>[
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: CircularProgressIndicator(),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 16),
-                            child: Text('Awaiting result...'),
-                          ),
-                        ];
-                      }
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: children,
-                        ),
-                      );
-                    })
-              ]
-
-              // children: <Widget>[
-              //   Text('Back', style: Theme.of(context).textTheme.headline1),
-              //   Text('Click here to flip front',
-              //       style: Theme.of(context).textTheme.bodyText1),
-              // ],
-              ),
+                Text(flashcardsSet.Flashcards[index].Back,
+                    style: Theme.of(context).textTheme.headline3),
+                Text('Click here to flip front',
+                    style: Theme.of(context).textTheme.bodyText1),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -179,8 +97,10 @@ class _FlashcardState extends State<FlashcardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FlipCard'),
+        title: Text(flashcardsSet.Name),
       ),
+      bottomNavigationBar: MenuBottom(),
+      drawer: MenuDrawer(),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -188,19 +108,64 @@ class _FlashcardState extends State<FlashcardScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              _renderAppBar(context),
+              // _renderAppBar(context),
               Expanded(
                 flex: 4,
                 child: _renderContent(context),
               ),
-              Expanded(
-                flex: 1,
-                child: Container(),
-              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    child: ElevatedButton(
+                        onPressed: _correct, child: Text('Correct')),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    child:
+                        ElevatedButton(onPressed: _wrong, child: Text('Wrong')),
+                  )
+                ],
+              )
             ],
           )
         ],
       ),
     );
+  }
+
+  _correct() {
+    //send message to server
+
+    if (index + 1 < flashcardsSet.Flashcards.length)
+      index++;
+    else
+      index = 0;
+
+    if (cardKey.currentState?.isFront == false)
+      cardKey.currentState?.toggleCard();
+
+    setState(() {
+      cardKey.currentState;
+      index;
+    });
+  }
+
+  _wrong() {
+    //send message to server
+
+    if (index + 1 < flashcardsSet.Flashcards.length)
+      index++;
+    else
+      index = 0;
+
+    if (cardKey.currentState?.isFront == false)
+      cardKey.currentState?.toggleCard();
+
+    setState(() {
+      cardKey.currentState;
+      index;
+    });
   }
 }

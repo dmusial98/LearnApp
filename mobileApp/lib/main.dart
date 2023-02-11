@@ -9,7 +9,7 @@ import 'package:my_app/screens/login_screen.dart';
 import 'package:my_app/screens/register_screen.dart';
 import 'package:my_app/screens/search_screen.dart';
 import 'package:my_app/screens/own_screen.dart';
-
+import 'package:my_app/data/flashcards_set.dart';
 import 'screens/favourite_screen.dart';
 
 void main() {
@@ -23,22 +23,31 @@ class LearnApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.blueGrey,
-          brightness: Brightness.light,
-        ),
-        routes: {
-          '/': (context) => const LoginScreen(),
-          '/register': (context) => const RegisterScreen(),
-          '/own': (context) => const OwnScreen(),
-          '/search': (context) => const SearchScreen(),
-          '/explore': (context) => const ExploreScreen(),
-          '/add': (context) => const AddScreen(),
-          '/favourites': (context) => const FavouriteScreen(),
-          '/edit_profile': (context) => const EditProfileScreen(),
-          '/flashcards': (context) => const FlashcardScreen(),
-          '/flashcards_set': (context) => const FlashcardSetScreen(),
-          '/flashcards_set_test': (context) => const FlashcardsSetTestScreen()
-        });
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
+        brightness: Brightness.light,
+      ),
+      routes: {
+        '/': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(),
+        '/own': (context) => const OwnScreen(),
+        '/search': (context) => const SearchScreen(),
+        '/explore': (context) => const ExploreScreen(),
+        '/add': (context) => const AddScreen(),
+        '/favourites': (context) => const FavouriteScreen(),
+        '/edit_profile': (context) => const EditProfileScreen(),
+        // '/flashcards': (context) => const FlashcardScreen(),
+        '/flashcards_set': (context) => const FlashcardSetScreen(),
+        '/flashcards_set_test': (context) => const FlashcardsSetTestScreen()
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/flashcards') {
+          final value = settings.arguments as FlashcardsSet;
+          return MaterialPageRoute(
+              builder: (_) => FlashcardScreen(key: key, flashcardsSet: value));
+        }
+        return null;
+      },
+    );
   }
 }
