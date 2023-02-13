@@ -11,13 +11,6 @@ import '../data/http_helper.dart';
 import '../shared/menu_drawer.dart';
 import 'package:intl/intl.dart';
 
-// class StaticPropertiesAddScreen {
-//   static TextEditingController nameTextFieldController =
-//       TextEditingController();
-//   static TextEditingController descriptionFieldController =
-//       TextEditingController();
-// }
-
 class AddScreen extends StatefulWidget {
   AddScreen({super.key});
 
@@ -29,8 +22,7 @@ class _AddScreenState extends State<AddScreen> {
   TextEditingController nameTextFieldController = TextEditingController();
   TextEditingController descriptionTextFieldController =
       TextEditingController();
-  static List<Flashcard> flashcards =
-      List<Flashcard>.filled(1, Flashcard(0, 'word', 'definition', 0));
+  static List<Flashcard> flashcards = List.empty(growable: true);
   List<TextEditingController> frontFlashcardsTextEditingControllers =
       List.empty(growable: true);
   List<TextEditingController> backFlashcardsTextEditingControllers =
@@ -52,7 +44,6 @@ class _AddScreenState extends State<AddScreen> {
     return Scaffold(
         appBar: AppBar(title: Text('Add')),
         bottomNavigationBar: MenuBottom(),
-        drawer: MenuDrawer(),
         body: Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -65,6 +56,8 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   setListWithWidgets() {
+    flashcards.add(Flashcard(0, 'Front', 'Back', 0));
+
     flashcardsListItems
         .add(Field(nameTextFieldController, descriptionTextFieldController));
 
@@ -79,7 +72,7 @@ class _AddScreenState extends State<AddScreen> {
       ));
     }
 
-    flashcardsListItems.add(AddButton('Add flashcard'));
+    flashcardsListItems.add(AddButton('Add flashcard', _addFlashcard));
     flashcardsListItems
         .add(SaveButton('Save flashcards set', _saveFlashcardsSet));
 
@@ -112,6 +105,35 @@ class _AddScreenState extends State<AddScreen> {
         flashcards);
 
     await httpHelper.createFlashcardsSet(flashcardsSet);
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: Duration(seconds: 1),
+        content: Text(
+            'Flashcards set: ${nameTextFieldController.text} was created')));
+  }
+
+  _addFlashcard() {
+    flashcards.add(Flashcard(0, 'Front', 'Back', 0));
+    flashcardsListItems.removeLast();
+    flashcardsListItems.removeLast();
+
+    frontFlashcardsTextEditingControllers.add(TextEditingController());
+    backFlashcardsTextEditingControllers.add(TextEditingController());
+
+    flashcardsListItems.add(InputFieldFlashcardWidget(
+        frontController:
+            frontFlashcardsTextEditingControllers[flashcards.length - 1],
+        backController:
+            backFlashcardsTextEditingControllers[flashcards.length - 1]));
+
+    flashcardsListItems.add(AddButton('Add flashcard', _addFlashcard));
+    flashcardsListItems
+        .add(SaveButton('Save flashcards set', _saveFlashcardsSet));
+
+    setState(() {
+      flashcardsListItems = List.from(flashcardsListItems);
+      flashcards = List.from(flashcards);
+    });
   }
 }
 
@@ -191,13 +213,15 @@ class Field extends StatelessWidget {
 
 class AddButton extends StatelessWidget {
   String text = '';
-
-  AddButton(this.text);
+  VoidCallback callback;
+  AddButton(this.text, this.callback);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () {},
+        onTap: () {
+          callback();
+        },
         child: Container(
           margin: const EdgeInsets.only(
               left: 32.0, right: 32.0, top: 20.0, bottom: 20.0),

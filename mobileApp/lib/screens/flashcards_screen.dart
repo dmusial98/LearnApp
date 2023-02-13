@@ -234,9 +234,9 @@ class _FlashcardState extends State<FlashcardScreen> {
     int points = 0;
 
     if (isCorrect)
-      points += 50;
+      points += 20;
     else
-      points -= 50;
+      points -= 20;
 
     FlashcardLearnProperties flashcardLearnProperties =
         flashcardLearnPropertiesList.firstWhere((element) =>
