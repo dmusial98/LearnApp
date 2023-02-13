@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using LearnAppServerAPI.Data.Entities;
-using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore;
 using System.Drawing;
 
 namespace LearnAppServerAPI.Data

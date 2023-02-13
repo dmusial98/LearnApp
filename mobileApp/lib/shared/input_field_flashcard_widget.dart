@@ -3,8 +3,8 @@ import 'package:my_app/data/flashcard.dart';
 import 'package:my_app/data/flashcards_set.dart';
 
 class InputFieldFlashcardWidget extends StatelessWidget {
-  Flashcard flashcard;
-  InputFieldFlashcardWidget({Key? key, required this.flashcard})
+  InputFieldFlashcardWidget(
+      {Key? key, required this.frontController, required this.backController})
       : super(key: key);
 
   TextEditingController frontController = TextEditingController();

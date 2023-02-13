@@ -184,4 +184,19 @@ class HttpHelper {
       throw Exception('Properties could not be edited! ${result.reasonPhrase}');
     }
   }
+
+  Future<void> createFlashcardsSet(FlashcardsSet set) async {
+    String jsonCreatedProperty = jsonEncode(set);
+
+    Uri uri = Uri.http(authority, 'api/FlashcardsSets/');
+
+    http.Response result = await http.post(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonCreatedProperty,
+    );
+    if (result.statusCode != 201) throw Exception(result.body);
+  }
 }

@@ -20,7 +20,7 @@ class FlashcardScreen extends StatefulWidget {
 
 class _FlashcardState extends State<FlashcardScreen> {
   FlashcardsSet flashcardsSet = FlashcardsSet(0, 0, 'Name', 'Description',
-      'Date', List<Flashcard>.filled(1, new Flashcard(0, 'front', 'back', 0)));
+      List<Flashcard>.filled(1, new Flashcard(0, 'front', 'back', 0)));
   int index = 0;
 
   GlobalDataSingleton globalDataSingleton = GlobalDataSingleton();

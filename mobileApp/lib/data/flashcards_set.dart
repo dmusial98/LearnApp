@@ -7,20 +7,20 @@ class FlashcardsSet {
   int EditorId = 0;
   String Name = '';
   String Description = '';
-  String Date = '';
+  // String Date = '';
   List<Flashcard> Flashcards = [];
 
   FlashcardsSet.empty();
 
-  FlashcardsSet(this.Id, this.EditorId, this.Name, this.Description, this.Date,
-      this.Flashcards);
+  FlashcardsSet(
+      this.Id, this.EditorId, this.Name, this.Description, this.Flashcards);
 
   FlashcardsSet.fromJson(Map<String, dynamic> flashcardsSetMap) {
     Id = flashcardsSetMap['id'] ?? 0;
     EditorId = flashcardsSetMap['editorId'] ?? 0;
     Name = flashcardsSetMap['name'] ?? '';
     Description = flashcardsSetMap['description'] ?? '';
-    Date = flashcardsSetMap['date'] ?? '';
+    // Date = flashcardsSetMap['date'] ?? '';
     Flashcards = (flashcardsSetMap['flashcards'] as List).map((i) {
       return Flashcard.fromJson(i);
     }).toList();
@@ -30,6 +30,6 @@ class FlashcardsSet {
         'editorId': EditorId,
         'name': Name,
         'description': Description,
-        'date': Date,
+        // 'date': Date,
       };
 }
