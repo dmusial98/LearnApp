@@ -63,6 +63,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
   Future<void> addSetListItemWidgets() async {
     for (var element in flashcardsSetList) {
       setListItems.add(SetListItemWidget(flashcardSet: element));
+      setListItems.add(SetListItemWidget(flashcardSet: element));
+      setListItems.add(SetListItemWidget(flashcardSet: element));
     }
     setState(() {
       setListItems = List.from(setListItems);

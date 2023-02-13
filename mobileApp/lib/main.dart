@@ -34,7 +34,7 @@ class LearnApp extends StatelessWidget {
         '/own': (context) => const OwnScreen(),
         '/search': (context) => const SearchScreen(),
         '/explore': (context) => const ExploreScreen(),
-        '/add': (context) => const AddScreen(),
+        '/add': (context) => AddScreen(),
         '/favourites': (context) => const FavouriteScreen(),
         '/edit_profile': (context) => const EditProfileScreen(),
         '/flashcards_set': (context) => const FlashcardSetScreen(),

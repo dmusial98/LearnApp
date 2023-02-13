@@ -17,45 +17,6 @@ class FlashcardSetScreen extends StatefulWidget {
 class _FlashcardSetScreenState extends State<FlashcardSetScreen> {
   FlashcardsSet flashcardsSet = FlashcardsSet.empty();
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   final arguments = (ModalRoute.of(context)?.settings.arguments ??
-  //       <String, dynamic>{}) as Map;
-
-  //   flashcardsSet.Id = arguments['flashcardSetID'];
-
-  //   return Scaffold(
-  //       appBar: AppBar(title: Text(flashcardsSet.Name.toString())),
-  //       //bottomNavigationBar: MenuBottom(),
-  //       //drawer: MenuDrawer(),
-  //       body: Center(
-  //           child: Column(children: [
-  //         Padding(
-  //           padding: const EdgeInsets.all(24.0),
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(32.0),
-  //             child: ElevatedButton(
-  //                 onPressed: goToFlashcards, child: Text('Flashcards')),
-  //           ),
-  //         ),
-  //         Padding(
-  //           padding: const EdgeInsets.all(24.0),
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(32.0),
-  //             child: ElevatedButton(onPressed: goToTest, child: Text('Test')),
-  //           ),
-  //         ),
-  //         Padding(
-  //           padding: const EdgeInsets.all(24.0),
-  //           child: Padding(
-  //             padding: const EdgeInsets.all(32.0),
-  //             child: ElevatedButton(
-  //                 onPressed: goToTypeText, child: Text('Type Text')),
-  //           ),
-  //         ),
-  //       ])));
-  // }
-
   @override
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
