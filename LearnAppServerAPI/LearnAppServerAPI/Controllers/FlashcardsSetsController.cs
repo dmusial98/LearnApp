@@ -83,6 +83,9 @@ namespace LearnAppServerAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<FlashcardsSetModel>> Post(FlashcardsSetModel model)
         {
+
+            model.IsPublic= true;
+
             try
             {
                 var flashcardsSet = _mapper.Map<FlashcardsSet>(model);

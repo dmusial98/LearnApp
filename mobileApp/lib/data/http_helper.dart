@@ -185,6 +185,21 @@ class HttpHelper {
     }
   }
 
+  Future<void> createFlashcards(List<Flashcard> flashcards) async {
+    String jsonNewPropert = jsonEncode(flashcards);
+
+    Uri uri = Uri.http(authority, 'api/Flashcards/');
+
+    http.Response result = await http.post(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonNewPropert,
+    );
+    if (result.statusCode != 201) throw Exception(result.body);
+  }
+
   Future<void> createFlashcardsSet(FlashcardsSet set) async {
     String jsonCreatedProperty = jsonEncode(set);
 
@@ -198,5 +213,14 @@ class HttpHelper {
       body: jsonCreatedProperty,
     );
     if (result.statusCode != 201) throw Exception(result.body);
+
+    Map<String, dynamic> data = json.decode(result.body);
+    FlashcardsSet _set = FlashcardsSet.fromJson(data);
+
+    for (var element in set.Flashcards) {
+      element.FlashcardsSetId = _set.Id;
+    }
+
+    await createFlashcards(set.Flashcards);
   }
 }
